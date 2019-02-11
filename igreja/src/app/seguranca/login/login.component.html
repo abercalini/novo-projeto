@@ -1,0 +1,29 @@
+<div class="container">
+  <form #formularioLogin="ngForm" (ngSubmit)="logar(email.value, senha.value)">
+
+    {{ segurancaService.tokenDecodificado | json }}
+    <div class="ui-g">
+      <div class="ui-g-12">
+          <p-toast position="bottom-right"></p-toast>
+      </div>
+    </div>
+
+    <div class="ui-g" align="center">
+      <div class="ui-g-12">
+        <h1>Login</h1>
+      </div>
+
+      <div class="ui-g-12 ui-md-12 ui-fluid">
+        <input type="text" pInputText placeholder="Email" style="width: 400px;" #email/>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-fluid">
+          <input type="password" pPassword promptLabel="Entre com a sua senha" weakLabel="Senha fraca" #senha
+            mediumLabel="Senha média" strongLabel="Senha forte" style="width: 400px;" placeholder="Senha"/>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-fluid">
+          <button pButton type="submit" label="Entrar" class="ui-button-success" icon="pi pi-check"
+            style="width: 400px; border: none;"></button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,117 @@
+<div class="container">
+  <form #formularioFornecedor="ngForm" (ngSubmit)="prepararSalvar(formularioFornecedor)">
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-toast position="bottom-right"></p-toast>
+      </div>
+    </div>
+
+    <p-tabView [activeIndex]="posicao">
+        <p-tabPanel header="{{editando() === true ? 'Editando Fornecedor / Colaborador ' : 'Cadastro Fornecedor / Colaborador'}}" leftIcon="pi pi-user">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-fluid">
+              <label>Nome Fantasia/Razão Social</label>
+              <input type="text" pInputText [(ngModel)]="fornecedor.nome" name="nome"/>
+            </div>
+            <div class="ui-g-4 ui-fluid">
+              <label>Pessoa</label>
+              <p-selectButton [options]="pessoas" [(ngModel)]="fornecedor.tipoPessoa" name="tipoPessoa" #pessoa></p-selectButton>
+            </div>
+            <div *ngIf="pessoa.value === 'fisica'" class="ui-g-12 ui-md-3 ui-fluid">
+              <label>CPF</label>
+              <p-inputMask [(ngModel)]="fornecedor.cpf" name="cpf" mask="999.999.999-99"></p-inputMask>
+            </div>
+            <div *ngIf="pessoa.value === 'juridica'" class="ui-g-12 ui-md-3 ui-fluid">
+                <label>CNPJ</label>
+                <p-inputMask [(ngModel)]="fornecedor.cnpj" name="cnpj" mask="99.999.999/9999-99"></p-inputMask>
+              </div>
+          </div>
+
+          <div class="ui-g">
+            <div class="ui-g-4 ui-md-2 ui-fluid">
+              <label>É colaborador?</label>
+              <p-toggleButton [(ngModel)]="fornecedor.colaborador" onLabel="Sim" offLabel="Não" name="colaborador"></p-toggleButton>
+            </div>
+          </div>
+
+          <div *ngIf="fornecedor.colaborador" class="ui-g">
+            <div class="ui-g-12 ui-md-3 ui-fluid">
+              <label>RG</label>
+              <input type="text" pInputText [(ngModel)]="fornecedor.rg" name="rg" />
+            </div>
+            <div class="ui-g-12 ui-md-3 ui-fluid">
+              <label>Cargo</label>
+              <input type="text" pInputText [(ngModel)]="fornecedor.cargo" name="cargo" />
+            </div>
+            <div class="ui-g-12 ui-md-3 ui-fluid">
+              <label>INSS</label>
+              <p-spinner size="30" [(ngModel)]="fornecedor.inss" name="inss"></p-spinner>
+            </div>
+            <div class="ui-g-12 ui-md-3 ui-fluid">
+              <label>Valor Renda</label>
+              <input currencyMask [(ngModel)]="fornecedor.valorRenda" name="valorRenda" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" pInputText placeholder="0.00"/>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+              <label>Data Admissão</label>
+              <p-calendar [(ngModel)]="fornecedor.dataAdmissao" name="dataAdmissao" dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+                <label>Data Desligamento</label>
+                <p-calendar [(ngModel)]="fornecedor.dataDesligamento" name="dataDesligamento" dateFormat="dd/mm/yy"></p-calendar>
+              </div>
+          </div>
+
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+                <label>Email</label>
+                <input type="text" pInputText [(ngModel)]="fornecedor.email" name="email" />
+              </div>
+              <div class="ui-g-12 ui-md-4 ui-fluid">
+                <label>Telefone</label>
+                <input type="text" pInputText [(ngModel)]="fornecedor.telefone" name="telefone" />
+              </div>
+              <div class="ui-g-12 ui-md-4 ui-fluid">
+                <label>Celular</label>
+                <p-inputMask [(ngModel)]="fornecedor.celular" mask="(99)999999999" name="celular"></p-inputMask>
+              </div>
+          </div>
+        </p-tabPanel>
+        <p-tabPanel header="Endereço" leftIcon="pi pi-home">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-2 ui-fluid">
+              <label>CEP</label>
+              <p-inputMask [(ngModel)]="fornecedor.endereco.cep" mask="99999/999" name="cep" (keydown.Tab)="buscarCep(fornecedor.endereco.cep)"></p-inputMask>
+            </div>
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+              <label>Estado</label>
+              <input type="text" pInputText [(ngModel)]="fornecedor.endereco.estado" name="estado" />
+            </div>
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+              <label>Numero</label>
+              <input type="text" pInputText [(ngModel)]="fornecedor.endereco.numero" name="numero" />
+            </div>
+
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+              <label>Cidade</label>
+              <input type="text" pInputText [(ngModel)]="fornecedor.endereco.cidade" name="cidade" />
+            </div>
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+              <label>Bairro</label>
+              <input type="text" pInputText [(ngModel)]="fornecedor.endereco.bairro" name="bairro" />
+            </div>
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+              <label>Rua</label>
+              <input type="text" pInputText [(ngModel)]="fornecedor.endereco.rua" name="rua" />
+            </div>
+            <div class="ui-g-4 ui-md-2 ui-fluid">
+              <button pButton type="submit" label="Salvar" class="ui-button-success" icon="pi pi-plus"></button>
+            </div>
+            <div class="ui-g-4 ui-md-2 ui-fluid">
+              <button pButton type="button" label="Voltar" icon="pi pi-arrow-left" routerLink="/fornecedor"></button>
+            </div>
+          </div>
+        </p-tabPanel>
+    </p-tabView>
+  </form>
+</div>

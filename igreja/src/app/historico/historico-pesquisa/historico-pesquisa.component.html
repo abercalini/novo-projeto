@@ -1,0 +1,46 @@
+<div class="container">
+  <form #historicoFilter="ngForm" (ngSubmit)="listarTodos()">
+    <div class="ui-g">
+      <div class="ui-g-12">
+          <p-toast position="bottom-right"></p-toast>
+      </div>
+    </div>
+
+    <p-fieldset legend="Log do sistema">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-8 ui-fluid">
+          <label>Usuario</label>
+          <input type="text" pInputText placeholder="Pesquisa por e-mail do usuario" [(ngModel)]="pesquisarUsuario" name="historico"/>
+        </div>
+        <div class="ui-g-12 ui-md-2 ui-fluid">
+          <label style="color: white">teste</label>
+          <button pButton type="button" label="Pesquisar" (click)="listarTodos()" icon="pi pi-search"></button>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-12 ui-fluid">
+            <p-table [value]="historicos" [responsive]="true" [paginator]="true" [rows]="30">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 100px;">#</th>
+                        <th style="width: 180px">Data</th>
+                        <th style="width: 600px">Descrição</th>
+                        <th>Usuario</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-historico>
+                    <tr>
+                        <td>{{historico.codigo}}</td>
+                        <td>{{historico.data | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{historico.descricao}}</td>
+                        <td>{{historico.usuario}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+      </div>
+    </p-fieldset>
+  </form>
+</div>

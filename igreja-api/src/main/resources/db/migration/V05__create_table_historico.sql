@@ -1,0 +1,6 @@
+CREATE TABLE historico (
+	codigo BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+	descricao VARCHAR(50),
+	usuario VARCHAR(50),
+	data DATE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

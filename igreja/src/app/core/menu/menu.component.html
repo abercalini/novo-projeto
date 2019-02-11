@@ -1,0 +1,8 @@
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+        <p-menu #menu [popup]="true" [model]="items"></p-menu>
+        <button type="button" pButton icon="pi pi-fw pi-list" label="Menu" (click)="menu.toggle($event)"></button>
+    </div>
+  </div>
+</div>

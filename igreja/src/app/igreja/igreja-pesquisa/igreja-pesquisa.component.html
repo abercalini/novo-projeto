@@ -1,0 +1,69 @@
+<div class="container">
+
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-12">
+      <p-toast position="bottom-right"></p-toast>
+    </div>
+  </div>
+
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-12">
+        <p-confirmDialog #cd header="Excluir" icon="pi pi-exclamation-triangle">
+            <p-footer>
+              <button type="button" pButton icon="pi pi-check" label="Sim, tenho certeza" (click)="cd.accept()" style="background-color: red; border: none;"></button>
+              <button type="button" pButton icon="pi pi-times" label="Não" (click)="cd.reject()" style="background-color: teal; border: none;"></button>
+            </p-footer>
+        </p-confirmDialog>
+    </div>
+  </div>
+
+  <form #formularioIgreja="ngForm" (ngSubmit)="pesquisar()">
+    <p-fieldset legend="Lista de igrejas">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-8 ui-fluid">
+          <label>Nome</label>
+          <input type="text" pInputText placeholder="Pesquisar por nome da igreja" [(ngModel)]="igrejaFilter.nome" name="filter"/>
+        </div>
+        <div class="ui-g-12 ui-md-2 ui-fluid">
+          <label style="color: white">Teste</label>
+          <button pButton type="submit" label="Pesquisar" icon="pi pi-search" ></button>
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-12 ui-fluid">
+            <p-table [value]="igrejas" [responsive]="true" [paginator]="true" [rows]="10" #tabela>
+                <ng-template pTemplate="header">
+                    <tr>
+                      <th style="width: 40px;">#</th>
+                      <th style="width: 300px;">Nome</th>
+                      <th style="width: 100px;">CNPJ</th>
+                      <th style="width: 80px;">Telefone</th>
+                      <th style="width: 60px;">Contribuição</th>
+                      <th style="width: 60px;">Ações</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-i>
+                    <tr>
+                      <td>{{i.codigo}}</td>
+                      <td>{{i.nome}}</td>
+                      <td>{{i.cnpj}}</td>
+                      <td>{{i.telefone}}</td>
+                      <td>{{i.porcentagemContribuicao}}</td>
+                      <td>
+                          <button pButton type="button" icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"
+                            style="background-color: teal; border:none;" [routerLink]="['/igreja/', i.codigo]"></button>
+                          <button pButton type="button" icon="pi pi-times"  pTooltip="Excluir" tooltipPosition="top"
+                            style="background-color: red; border: none;" (click)="excluir(i.codigo)"></button>
+                      </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-fluid">
+          <a href="#" style="color: teal;" routerLink="/igreja/novo">Adicionar igreja</a>
+        </div>
+      </div>
+    </p-fieldset>
+  </form>
+</div>

@@ -1,0 +1,88 @@
+<div class="container">
+
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-12">
+        <p-toast position="bottom-right"></p-toast>
+    </div>
+  </div>
+
+  <form #formularioIgreja="ngForm" (ngSubmit)="salvar(formularioIgreja)">
+    <p-fieldset legend="Cadastro de Igreja">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-12 ui-fluid">
+          <label>Nome Igreja</label>
+          <input type="text" pInputText [(ngModel)]="igreja.nome" name="nome" />
+        </div>
+
+        <div class="ui-g-12 ui-md-2 ui-fluid">
+          <label>CNPJ</label>
+          <p-inputMask [(ngModel)]="igreja.cnpj" name="cnpj" mask="99.999.999/9999-99"></p-inputMask>
+        </div>
+        <div class="ui-g-12 ui-md-2 ui-fluid">
+          <label>Telefone</label>
+          <input type="text" pInputText [(ngModel)]="igreja.telefone" name="telefone" />
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Responsável</label>
+          <input type="text" pInputText [(ngModel)]="igreja.responsavel" name="responsavel" />
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Email</label>
+          <input type="text" pInputText [(ngModel)]="igreja.email" name="email" />
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Distrito</label>
+          <p-dropdown [options]="distritos" [(ngModel)]="igreja.distrito.codigo" name="distrito"
+            placeholder="Selecione..." [autoWidth]="false" [filter]="true"></p-dropdown>
+        </div>
+        <div class="ui-g-6 ui-md-2 ui-fluid">
+          <label style="color: white">asdas</label>
+            <button pButton type="button" label="Adicionar Distrito" class="ui-button-success" icon="pi pi-plus" routerLink="/distrito/novo"></button>
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-6 ui-fluid">
+          <label>Tipo Igreja</label>
+          <p-dropdown [options]="tiposIgrejas" [(ngModel)]="igreja.tipoIgreja" name="tipoIgreja" [autoWidth]="false"
+            placeholder="Selecione..." [filter]="true"></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-fluid">
+          <label>Porcentagem Contribuição</label>
+          <p-dropdown [options]="contribuicoes" [(ngModel)]="igreja.porcentagemContribuicao" name="porcentagemContribuicao" [autoWidth]="false"
+            placeholder="Selecione..." [filter]="true"></p-dropdown>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>CEP</label>
+        <p-inputMask [(ngModel)]="igreja.endereco.cep" mask="99999-999" name="cep" (keydown.Tab)="eventTab(igreja.endereco.cep)"></p-inputMask>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>Estado</label>
+        <input type="text" pInputText [(ngModel)]="igreja.endereco.estado" name="estado" />
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>Numero</label>
+        <input type="text" pInputText [(ngModel)]="igreja.endereco.numero" name="numero" />
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Cidade</label>
+        <input type="text" pInputText [(ngModel)]="igreja.endereco.cidade" name="cidade" />
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Rua</label>
+        <input type="text" pInputText [(ngModel)]="igreja.endereco.rua" name="rua" />
+      </div>
+
+      <div class="ui-g-4 ui-md-2 ui-fluid">
+          <button pButton type="submit" label="Salvar" class="ui-button-success" icon="pi pi-plus"></button>
+      </div>
+      <div class="ui-g-4 ui-md-2 ui-fluid">
+          <button pButton type="button" label="Voltar" icon="pi pi-arrow-left" routerLink="/igreja"></button>
+      </div>
+
+    </p-fieldset>
+  </form>
+</div>
