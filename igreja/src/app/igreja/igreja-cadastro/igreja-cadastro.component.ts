@@ -8,6 +8,7 @@ import { Igreja } from '../igreja';
 import { MessageService } from 'primeng/api';
 import { IgrejaService } from '../igreja.service';
 import { NgForm } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -28,7 +29,8 @@ export class IgrejaCadastroComponent implements OnInit {
     private igrejaService: IgrejaService,
     private segurancaService: SegurancaService,
     private historicoService: HistoricoService,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
@@ -36,8 +38,31 @@ export class IgrejaCadastroComponent implements OnInit {
     this.adicionarTiposIgrejas();
     this.adicionarContribuicoes();
     const codigo = this.router.snapshot.params['codigo'];
-    console.log(codigo);
+    if (codigo) {
+      this.buscarPorCodigo(codigo);
+    } else {
+      this.titleService.setTitle('Cadastro de igreja');
+    }
+  }
 
+  prepararSalvar(ngForm: NgForm) {
+    if (!this.editando()) {
+      this.salvar(ngForm);
+    } else {
+      this.editar();
+    }
+  }
+
+  editar() {
+    this.igrejaService.editar(this.igreja).then(response => {
+      this.historicoService.salvar('Igreja editada ' + response.nome, this.segurancaService.nomeUsuario);
+      this.adicionarMensagem('success', 'Igreja editada com sucesso', 'Igreja editada com sucesso');
+      this.adicionarTitulo();
+    })
+    .catch(response => {
+      console.log(response);
+      this.adicionarMensagem('error', response.message, response.message);
+    });
   }
 
   salvar(ngForm: NgForm) {
@@ -46,6 +71,18 @@ export class IgrejaCadastroComponent implements OnInit {
       this.igreja = new Igreja();
       this.adicionarMensagem('success', 'Igreja Cadastrado com suceso', 'Igreja Cadastrado com suceso');
       this.historicoService.salvar('Igreja cadastrada ' + response.nome, this.segurancaService.nomeUsuario);
+    });
+  }
+
+  buscarPorCodigo(codigo: number) {
+    this.igrejaService.buscarPorCodigo(codigo).then(respnse => {
+
+      this.igreja = respnse;
+      this.adicionarTitulo();
+
+    }).catch(response => {
+      console.log(response);
+      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 
@@ -93,6 +130,14 @@ export class IgrejaCadastroComponent implements OnInit {
 
   adicionarMensagem(severity: string, detail: string, sumary: string) {
     this.messageService.add({severity: severity, detail: detail, summary: sumary});
+  }
+
+  editando(): Boolean {
+    return Boolean(this.igreja.codigo);
+  }
+
+  adicionarTitulo() {
+    this.titleService.setTitle('Editando a igreja ' + this.igreja.nome);
   }
 
 }

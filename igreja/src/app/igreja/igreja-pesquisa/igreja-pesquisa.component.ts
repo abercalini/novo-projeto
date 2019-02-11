@@ -6,6 +6,7 @@ import { IgrejaFilter } from '../igrejaFilter';
 import { MessageService } from 'primeng/api';
 import { IgrejaService } from '../igreja.service';
 import { ConfirmationService } from 'primeng/api';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -24,11 +25,13 @@ export class IgrejaPesquisaComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private historicoService: HistoricoService,
-    private segurancaService: SegurancaService
+    private segurancaService: SegurancaService,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
     this.pesquisar();
+    this.titleService.setTitle('Pesquisa de igreja');
   }
 
   excluir(codigo: number) {

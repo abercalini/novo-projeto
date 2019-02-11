@@ -16,9 +16,19 @@ export class IgrejaService {
       .toPromise().then(response => response);
   }
 
+  editar(igreja: Igreja): Promise<any> {
+    return this.httpClient.put(`${this.baseUrl}/${igreja.codigo}`, JSON.stringify(igreja), {headers : this.adicionarHeadersSalvar()})
+      .toPromise().then(response => response);
+  }
+
   excluir(codigo: number): Promise<any> {
     return this.httpClient.delete(`${this.baseUrl}/${codigo}`, {headers : this.adicionarHeaders()})
       .toPromise().then(null);
+  }
+
+  buscarPorCodigo(codigo: number): Promise<any> {
+    return this.httpClient.get(`${this.baseUrl}/${codigo}`, {headers : this.adicionarHeaders()})
+      .toPromise().then(response => response);
   }
 
   listarTodosParams(igrejaFilter: IgrejaFilter): Promise<any> {

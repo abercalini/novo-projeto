@@ -6,8 +6,8 @@
     </div>
   </div>
 
-  <form #formularioIgreja="ngForm" (ngSubmit)="salvar(formularioIgreja)">
-    <p-fieldset legend="Cadastro de Igreja">
+  <form #formularioIgreja="ngForm" (ngSubmit)="prepararSalvar(formularioIgreja)">
+    <p-fieldset legend="{{editando() !== true ? 'Cadastro ' : 'Edição '}} de Igreja">
       <div class="ui-g">
         <div class="ui-g-12 ui-md-12 ui-fluid">
           <label>Nome Igreja</label>
