@@ -16,6 +16,14 @@ export class CargoministroService {
       .toPromise().then(response => response);
   }
 
+  excluir(codigo: number): Promise<any> {
+    return this.httpClient.delete(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()}).toPromise().then(null);
+  }
+
+  /*buscarPorCodigo(codigo: number): Promise<any> {
+
+  } */
+
   listarTodos(): Promise<any> {
     return this.httpClient.get(this.baseUrl, {headers: this.adicionarHeaders()}).toPromise().then(response => response);
   }

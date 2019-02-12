@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 import { CargoministroCadastroComponent } from './cargoministro-cadastro/cargoministro-cadastro.component';
@@ -22,7 +24,9 @@ import { CargoministroPesquisaComponent } from './cargoministro-pesquisa/cargomi
     FormsModule,
     ButtonModule,
     ToastModule,
-    TableModule
+    TableModule,
+    TooltipModule,
+    ConfirmDialogModule
   ]
 })
 export class CargoministroModule { }

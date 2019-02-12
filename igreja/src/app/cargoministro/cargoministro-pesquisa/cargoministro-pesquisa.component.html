@@ -5,16 +5,26 @@
         <p-toast position="bottom-right"></p-toast>
     </div>
   </div>
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-12 ui-fluid">
+        <p-confirmDialog #cd header="Excluir cargo ministerial" icon="pi pi-exclamation-triangle">
+            <p-footer>
+                <button type="button" pButton icon="pi pi-check" label="Sim, eu tenho certeza" style="background-color: red; border: none;" (click)="cd.accept()"></button>
+                <button type="button" pButton icon="pi pi-times" label="Não" style="background-color: teal; border: none;" (click)="cd.reject()"></button>
+            </p-footer>
+        </p-confirmDialog>
+    </div>
+  </div>
 
-    <p-fieldset legend="Lista de Cargos Minisiteriais">
+    <p-fieldset legend="Lista de Cargos Ministeriais">
         <div class="ui-g">
           <div class="ui-g-12 ui-md-12 ui-fluid">
-              <p-table [value]="cargos">
+              <p-table [value]="cargos" [responsive]="true" [paginator]="true" rows="10" #tabela>
                   <ng-template pTemplate="header">
                       <tr>
                           <th style="width: 80px;">#</th>
                           <th style="width: 600px;">Nome</th>
-                          <th style="width: 80px;">Ações</th>
+                          <th style="width: 70px;">Ações</th>
                       </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-c>
@@ -22,11 +32,16 @@
                           <td>{{c.codigo}}</td>
                           <td>{{c.nome}}</td>
                           <td>
-
+                            <button pButton type="button" icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top" style="background-color: teal; border: none;"></button>
+                            <button pButton type="button" icon="pi pi-times" pTooltip="Excluir" tooltipPosition="top" style="background-color: red; border: none;"
+                                (click)="excluir(c.codigo)"></button>
                           </td>
                       </tr>
                   </ng-template>
               </p-table>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-fluid">
+            <a href="#" style="color: teal;" routerLink="/cargoministro/novo">Adicionar Cargo Ministerial</a>
           </div>
         </div>
     </p-fieldset>
