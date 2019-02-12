@@ -1,3 +1,4 @@
+import { CargoministroCadastroComponent } from './../cargoministro/cargoministro-cadastro/cargoministro-cadastro.component';
 import { IgrejaPesquisaComponent } from './../igreja/igreja-pesquisa/igreja-pesquisa.component';
 import { IgrejaCadastroComponent } from '../igreja/igreja-cadastro/igreja-cadastro.component';
 import { DistricoCadastroComponent } from '../distrito/districo-cadastro/districo-cadastro.component';
@@ -11,6 +12,7 @@ import { LoginComponent } from './../seguranca/login/login.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { CargoministroPesquisaComponent } from '../cargoministro/cargoministro-pesquisa/cargoministro-pesquisa.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
@@ -26,6 +28,9 @@ const router: Routes = [
   {path: 'igreja/novo', component: IgrejaCadastroComponent},
   {path: 'igreja', component: IgrejaPesquisaComponent},
   {path: 'igreja/:codigo', component: IgrejaCadastroComponent},
+
+  {path: 'cargoministro/novo', component: CargoministroCadastroComponent},
+  {path: 'cargoministro', component: CargoministroPesquisaComponent},
 
   {path: 'historico', component: HistoricoPesquisaComponent},
 

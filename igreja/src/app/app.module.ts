@@ -1,3 +1,4 @@
+import { CargoministroModule } from './cargoministro/cargoministro.module';
 import { IgrejaModule } from './igreja/igreja.module';
 import { DistritoModule } from './distrito/distrito.module';
 import { FornecedorModule } from './fornecedor/fornecedor.module';
@@ -19,6 +20,8 @@ import { HistoricoService } from './historico/historico.service';
 import { FornecedorService } from './fornecedor/fornecedor.service';
 import { DistritoService } from './distrito/distrito.service';
 import { IgrejaService } from './igreja/igreja.service';
+import { CargoministroService } from './cargoministro/cargoministro.service';
+
 
 
 import { registerLocaleData } from '@angular/common';
@@ -39,12 +42,13 @@ registerLocaleData(localePt);
     CoreModule,
     FornecedorModule,
     DistritoModule,
-    IgrejaModule
+    IgrejaModule,
+    CargoministroModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'pt-BR'},
     SegurancaService, JwtHelperService, MessageService, HistoricoService, FornecedorService, ConfirmationService,
-    Title, DistritoService, IgrejaService
+    Title, DistritoService, IgrejaService, CargoministroService
   ],
   bootstrap: [AppComponent]
 })

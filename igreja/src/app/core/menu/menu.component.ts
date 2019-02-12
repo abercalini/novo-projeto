@@ -23,6 +23,12 @@ export class MenuComponent implements OnInit {
       ]
     },
     {
+      label: 'Configurar Membro',
+      items: [
+        {label: 'Cargos Ministeriais', routerLink: ['cargoministro']}
+      ]
+    },
+    {
       label: 'Historico',
       items: [
           {label: 'Log do sistema', icon: 'pi pi-clock', routerLink: ['/historico']},
