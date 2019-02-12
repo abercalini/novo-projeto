@@ -17,7 +17,7 @@ export class TipoadesaoService {
   }
 
   editar(tipoAdesao: TipoAdesao): Promise<any> {
-    return this.httpClient.put(`${this.baseUrl}/${tipoAdesao.codigo}` ,JSON.stringify(tipoAdesao), {headers: this.adicionarHeadersSalvar()})
+    return this.httpClient.put(`${this.baseUrl}/${tipoAdesao.codigo}`, JSON.stringify(tipoAdesao), {headers: this.adicionarHeadersSalvar()})
       .toPromise().then(response => response);
   }
 

@@ -8,10 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@SuppressWarnings("serial")
-@Table(name = "tipo_adesao")
+@Table(name = "funcao_membro")
 @Entity
-public class TipoAdesao implements Serializable {
+@SuppressWarnings("serial")
+public class FuncaoMembro implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +51,7 @@ public class TipoAdesao implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoAdesao other = (TipoAdesao) obj;
+		FuncaoMembro other = (FuncaoMembro) obj;
 		if (codigo == null) {
 			if (other.codigo != null)
 				return false;

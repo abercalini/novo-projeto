@@ -1,3 +1,4 @@
+import { FuncaomembroModule } from './funcaomembro/funcaomembro.module';
 import { CargoministroModule } from './cargoministro/cargoministro.module';
 import { IgrejaModule } from './igreja/igreja.module';
 import { DistritoModule } from './distrito/distrito.module';
@@ -10,6 +11,8 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { SegurancaModule } from './seguranca/seguranca.module';
 import { NavegacaoModule } from './navegacao/navegacao.module';
 import { HttpClientModule } from '@angular/common/http';
+import { TipoadesaoModule } from './tipoadesao/tipoadesao.module';
+import { SituacaomembroModule } from './situacaomembro/situacaomembro.module';
 
 import { AppComponent } from './app.component';
 
@@ -21,20 +24,18 @@ import { FornecedorService } from './fornecedor/fornecedor.service';
 import { DistritoService } from './distrito/distrito.service';
 import { IgrejaService } from './igreja/igreja.service';
 import { CargoministroService } from './cargoministro/cargoministro.service';
-
+import { TipoadesaoService } from './tipoadesao/tipoadesao.service';
+import { SituacaomembroService } from './situacaomembro/situacaomembro.service';
 
 
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
-import { SituacaomembroModule } from './situacaomembro/situacaomembro.module';
-import { SituacaomembroService } from './situacaomembro/situacaomembro.service';
-import { TipoadesaoModule } from './tipoadesao/tipoadesao.module';
-import { TipoadesaoService } from './tipoadesao/tipoadesao.service';
+import { FuncaomembroService } from './funcaomembro/funcaomembro.service';
 registerLocaleData(localePt);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,12 +50,14 @@ registerLocaleData(localePt);
     IgrejaModule,
     CargoministroModule,
     SituacaomembroModule,
-    TipoadesaoModule
+    TipoadesaoModule,
+    FuncaomembroModule
+    
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'pt-BR'},
     SegurancaService, JwtHelperService, MessageService, HistoricoService, FornecedorService, ConfirmationService,
-    Title, DistritoService, IgrejaService, CargoministroService, SituacaomembroService, TipoadesaoService
+    Title, DistritoService, IgrejaService, CargoministroService, SituacaomembroService, TipoadesaoService, FuncaomembroService
   ],
   bootstrap: [AppComponent]
 })

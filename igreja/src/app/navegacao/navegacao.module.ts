@@ -17,6 +17,8 @@ import { SituacaomembroCadastroComponent } from '../situacaomembro/situacaomembr
 import { SituacaomembroPesquisaComponent } from '../situacaomembro/situacaomembro-pesquisa/situacaomembro-pesquisa.component';
 import { TipoadesaoCadastroComponent } from '../tipoadesao/tipoadesao-cadastro/tipoadesao-cadastro.component';
 import { TipoadesaoPesquisaComponent } from '../tipoadesao/tipoadesao-pesquisa/tipoadesao-pesquisa.component';
+import { FuncaomembroCadastroComponent } from '../funcaomembro/funcaomembro-cadastro/funcaomembro-cadastro.component';
+import { FuncaomembroPesquisaComponent } from '../funcaomembro/funcaomembro-pesquisa/funcaomembro-pesquisa.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
@@ -44,6 +46,10 @@ const router: Routes = [
   {path: 'tipoadesao/novo', component: TipoadesaoCadastroComponent},
   {path: 'tipoadesao', component: TipoadesaoPesquisaComponent},
   {path: 'tipoadesao/:codigo', component: TipoadesaoCadastroComponent},
+
+  {path: 'funcaomembro/novo', component: FuncaomembroCadastroComponent},
+  {path: 'funcaomembro', component: FuncaomembroPesquisaComponent},
+  {path: 'funcaomembro/:codigo', component: FuncaomembroCadastroComponent},
 
   {path: 'historico', component: HistoricoPesquisaComponent},
 
