@@ -13,6 +13,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { CargoministroPesquisaComponent } from '../cargoministro/cargoministro-pesquisa/cargoministro-pesquisa.component';
+import { SituacaomembroCadastroComponent } from '../situacaomembro/situacaomembro-cadastro/situacaomembro-cadastro.component';
+import { SituacaomembroPesquisaComponent } from '../situacaomembro/situacaomembro-pesquisa/situacaomembro-pesquisa.component';
+import { TipoadesaoCadastroComponent } from '../tipoadesao/tipoadesao-cadastro/tipoadesao-cadastro.component';
+import { TipoadesaoPesquisaComponent } from '../tipoadesao/tipoadesao-pesquisa/tipoadesao-pesquisa.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
@@ -31,6 +35,15 @@ const router: Routes = [
 
   {path: 'cargoministro/novo', component: CargoministroCadastroComponent},
   {path: 'cargoministro', component: CargoministroPesquisaComponent},
+  {path: 'cargoministro/:codigo', component: CargoministroCadastroComponent},
+
+  {path: 'situacaomembro/novo', component: SituacaomembroCadastroComponent},
+  {path: 'situacaomembro', component: SituacaomembroPesquisaComponent},
+  {path: 'situacaomembro/:codigo', component: SituacaomembroCadastroComponent},
+
+  {path: 'tipoadesao/novo', component: TipoadesaoCadastroComponent},
+  {path: 'tipoadesao', component: TipoadesaoPesquisaComponent},
+  {path: 'tipoadesao/:codigo', component: TipoadesaoCadastroComponent},
 
   {path: 'historico', component: HistoricoPesquisaComponent},
 

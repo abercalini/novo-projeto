@@ -1,5 +1,5 @@
 <div class="container">
-  <form #formularioCargo="ngForm" (ngSubmit)="salvar(formularioCargo)">
+  <form #formularioCargo="ngForm" (ngSubmit)="prepararSalvar(formularioCargo)">
 
     <div class="ui-g">
       <div class="ui-g-12 ui-md-12">
@@ -7,17 +7,17 @@
       </div>
     </div>
 
-    <p-fieldset legend="Cadastro de cargo do ministerial">
+    <p-fieldset legend="{{editando() === true ? 'Editando ' : 'Cadastro de '}}cargo do ministerial">
       <div class="ui-g">
         <div class="ui-g-12 ui-md-12 ui-fluid">
           <label>Nome do cargo</label>
           <input type="text" pInputText  [(ngModel)]="cargoMinistro.nome" name="nome" />
         </div>
         <br>
-        <div class="ui-g-2 ui-md-2 ui-fluid">
+        <div class="ui-g-6 ui-md-2 ui-fluid">
             <button pButton type="submit" label="Salvar" class="ui-button-success" icon="pi pi-plus"></button>
         </div>
-        <div class="ui-g-2 ui-md-2 ui-fluid">
+        <div class="ui-g-6 ui-md-2 ui-fluid">
             <button pButton type="button" label="Voltar" icon="pi pi-arrow-left" routerLink="/cargoministro"></button>
         </div>
       </div>

@@ -1,0 +1,51 @@
+<div class="container">
+
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-12">
+        <p-toast position="bottom-right"></p-toast>
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-12">
+        <p-confirmDialog #cd header="Exclusão da situação do membro" icon="pi pi-exclamation-triangle">
+            <p-footer>
+                <button type="button" pButton icon="pi pi-check" label="Sim, eu tenho certeza" style="background-color: red; border: none;" (click)="cd.accept()"></button>  
+                <button type="button" pButton icon="pi pi-times" label="Não" style="background-color: teal; border: none;"(click)="cd.reject()"></button>
+            </p-footer>
+        </p-confirmDialog>
+    </div>
+  </div>
+  
+  <p-fieldset legend="Header">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-12 ui-fluid">
+          <p-table [value]="situacoes" [responsive]="true" [paginator]="true" [rows]="10" #tabela>
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th style="width: 80px;">#</th>
+                      <th style="width: 800px;">Situação</th>
+                      <th style="width: 80px;">Açoes</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-s>
+                  <tr>
+                      <td>{{s.codigo}}</td>
+                      <td>{{s.situacao}}</td>
+                      <td>
+                          <button pButton type="button" icon="pi pi-pencil" style="background-color: teal; border:none" 
+                            pTooltip="Editar" tooltipPosition="top" [routerLink]="['/situacaomembro/', s.codigo]"></button>
+                          <button pButton type="button" icon="pi pi-times" style="background-color: red; border:none;" 
+                            pTooltip="Excluir" tooltipPosition="top" (click)="excluir(s.codigo)"></button>
+                      </td>
+                  </tr>
+              </ng-template>
+          </p-table>
+      </div>
+
+      <div class="ui-g-12 ui-md-12 ui-fluid">
+        <a href="#" routerLink="/situacaomembro/novo" style="color: teal;">Adicionar situação membro</a>
+      </div>
+
+    </div>  
+  </p-fieldset>
+</div>

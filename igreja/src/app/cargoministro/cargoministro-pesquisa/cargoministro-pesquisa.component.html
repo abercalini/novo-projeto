@@ -32,7 +32,8 @@
                           <td>{{c.codigo}}</td>
                           <td>{{c.nome}}</td>
                           <td>
-                            <button pButton type="button" icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top" style="background-color: teal; border: none;"></button>
+                            <button pButton type="button" icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top" style="background-color: teal; border: none;"
+                               [routerLink]="['/cargoministro/', c.codigo]" ></button>
                             <button pButton type="button" icon="pi pi-times" pTooltip="Excluir" tooltipPosition="top" style="background-color: red; border: none;"
                                 (click)="excluir(c.codigo)"></button>
                           </td>

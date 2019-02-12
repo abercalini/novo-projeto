@@ -6,6 +6,8 @@ import { NgForm } from '@angular/forms';
 
 import { MessageService } from 'primeng/api';
 import { SegurancaService } from 'src/app/seguranca/seguranca.service';
+import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -21,17 +23,41 @@ export class CargoministroCadastroComponent implements OnInit {
     private messageService: MessageService,
     private cargoMinistroService: CargoministroService,
     private historicoService: HistoricoService,
-    private segurancaService: SegurancaService
+    private segurancaService: SegurancaService,
+    private router: ActivatedRoute,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
+    const codigo = this.router.snapshot.params['codigo'];
+    
+    if (codigo) {
+      this.buscarPorCodigo(codigo);
+    } else {
+      this.titleService.setTitle('Cadastro do cargo do ministro');
+    }  
+  }
 
+  prepararSalvar(ngForm: NgForm) {
+    if (!this.editando()) {
+      this.salvar(ngForm);
+    } else {
+      this.editar();      
+    }
+  }
+
+  editar() {
+    this.cargoMinistroService.editar(this.cargoMinistro).then(response => {
+      this.adicionarMenssagem('success', 'Editado com sucesso', 'Editado com sucesso');
+      this.adicionarTitulo();
+      this.historicoService.salvar('Editou um cargo ' + response.nome, this.segurancaService.nomeUsuario);
+    });
   }
 
   salvar(ngForm: NgForm) {
     this.cargoMinistroService.salvar(this.cargoMinistro).then(response => {
       this.adicionarMenssagem('success', 'Cadastrado com sucesso', 'Cadastrado com sucesso');
-      this.historicoService.salvar('Cargo ministro cadastrado ' + response.nome, this.segurancaService.nomeUsuario);
+      this.historicoService.salvar('Cadastrou um cargo do ministro ' + response.nome, this.segurancaService.nomeUsuario);
       ngForm.reset();
       this.cargoMinistro = new CargoMinistro();
     })
@@ -39,6 +65,25 @@ export class CargoministroCadastroComponent implements OnInit {
       console.log(response);
       this.adicionarMenssagem('error', response.message, response.message);
     });
+  }
+
+  buscarPorCodigo(codigo: number) {
+    this.cargoMinistroService.buscarPorCodigo(codigo).then(response => {
+      this.cargoMinistro = response;
+      this.adicionarTitulo();
+    }) 
+      .catch(response => {
+        console.log(response);
+        this.adicionarMenssagem('error', response.message, response.message);
+      })
+  }
+
+  adicionarTitulo() {
+    this.titleService.setTitle('Editando cargo ministro ' + this.cargoMinistro.nome);
+  }
+
+  editando(): Boolean {
+    return Boolean(this.cargoMinistro.codigo);
   }
 
   adicionarMenssagem(severity: string, detail: string, summary: string) {

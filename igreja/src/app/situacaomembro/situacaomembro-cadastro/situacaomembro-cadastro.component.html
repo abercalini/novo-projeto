@@ -1,0 +1,25 @@
+<div class="container">
+  <form #formularioMembro="ngForm" (ngSubmit)="prapararSalvar(formularioMembro)">
+    
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-12">
+          <p-toast position="bottom-right"></p-toast>
+      </div>
+    </div>
+    
+    <p-fieldset legend="{{editando() === true ? 'Editando ' : 'Cadastro da '}}  situação do membro">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-12 ui-fluid">
+          <label>Situação do membro</label>
+          <input type="text" pInputText [(ngModel)]="situacaoMembro.situacao" name="situacao"/>
+        </div>
+        <div class="ui-g-6 ui-md-2 ui-fluid">
+          <button pButton type="submit" label="Salvar" class="ui-button-success" icon="pi pi-plus"></button>
+        </div>
+        <div class="ui-g-6 ui-md-2 ui-fluid">
+          <button pButton type="button" label="Voltar" icon="pi pi-arrow-left" routerLink="/situacaomembro"></button>
+        </div>
+      </div>
+    </p-fieldset>
+  </form>  
+</div>

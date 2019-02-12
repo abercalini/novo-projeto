@@ -25,7 +25,9 @@ export class MenuComponent implements OnInit {
     {
       label: 'Configurar Membro',
       items: [
-        {label: 'Cargos Ministeriais', routerLink: ['cargoministro']}
+        {label: 'Cargos Ministeriais', routerLink: ['/cargoministro']},
+        {label: 'Situação Membro', routerLink: ['/situacaomembro']},
+        {label: 'Tipo Adesão', routerLink: ['/tipoadesao']}
       ]
     },
     {

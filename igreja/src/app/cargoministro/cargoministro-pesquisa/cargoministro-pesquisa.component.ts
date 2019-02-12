@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 import { HistoricoService } from '../../historico/historico.service';
 import { SegurancaService } from '../../seguranca/seguranca.service';
+import { Title } from '@angular/platform-browser';
 
 
 
@@ -23,11 +24,13 @@ export class CargoministroPesquisaComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private historicoService: HistoricoService,
-    private segurancaService: SegurancaService
+    private segurancaService: SegurancaService,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
     this.listarTodos();
+    this.titleService.setTitle('Pesquisa do ministro');
   }
 
   listarTodos() {
@@ -53,7 +56,7 @@ export class CargoministroPesquisaComponent implements OnInit {
           this.listarTodos();
         })
         .catch(response => {
-          //TODO: depois de criar a tabela membro fazer as alterações
+          //TODO: depois de criar a tabela membro fazer as alterações 
           console.log(response);
           this.adicionarMensagem('error', response.message, response.message);
         })
