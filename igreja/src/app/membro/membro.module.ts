@@ -7,6 +7,9 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { InputMaskModule } from 'primeng/inputmask';
+import { ButtonModule } from 'primeng/button';
+import { MultiSelectModule } from 'primeng/multiselect';
+
 
 
 import { MembroCadastroComponent } from './membro-cadastro/membro-cadastro.component';
@@ -21,7 +24,9 @@ import { MembroCadastroComponent } from './membro-cadastro/membro-cadastro.compo
     ToggleButtonModule,
     DropdownModule,
     CalendarModule,
-    InputMaskModule
+    InputMaskModule,
+    ButtonModule,
+    MultiSelectModule
   ]
 })
 export class MembroModule { }

@@ -2,6 +2,7 @@ package br.com.igreja.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -16,6 +17,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @SuppressWarnings("serial")
@@ -82,7 +86,7 @@ public class Membro implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "codigo_tipo_adesao")
-	private TipoAdesao tipoAdesao;
+	private TipoAdesao tipoAdesao; 
 	
 	@ManyToOne
 	@JoinColumn(name = "codigo_situacao_membro")
@@ -92,10 +96,12 @@ public class Membro implements Serializable{
 	@JoinColumn(name = "codigo_cargo_ministro")
 	private CargoMinitro cargoMinistro;
 	
+	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "membro_funcoes", joinColumns = @JoinColumn(name = "codigo_membro"),
 		inverseJoinColumns = @JoinColumn(name = "codigo_funcao"))
-	private List<FuncaoMembro> funcoes;
+	private List<FuncaoMembro> funcoes = new ArrayList<>();
+	
 	
 	
 
@@ -267,14 +273,6 @@ public class Membro implements Serializable{
 		this.situacaoMembro = situacaoMembro;
 	}
 
-	public CargoMinitro getCargoMinistro() {
-		return cargoMinistro;
-	}
-
-	public void setCargoMinistro(CargoMinitro cargoMinistro) {
-		this.cargoMinistro = cargoMinistro;
-	}
-
 	public LocalDate getDataConsagracao() {
 		return dataConsagracao;
 	}
@@ -323,6 +321,16 @@ public class Membro implements Serializable{
 		this.dizimista = dizimista;
 	}
 
+	
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+	
+
 	public TipoAdesao getTipoAdesao() {
 		return tipoAdesao;
 	}
@@ -331,20 +339,23 @@ public class Membro implements Serializable{
 		this.tipoAdesao = tipoAdesao;
 	}
 
+	public CargoMinitro getCargoMinistro() {
+		return cargoMinistro;
+	}
+
+	public void setCargoMinistro(CargoMinitro cargoMinistro) {
+		this.cargoMinistro = cargoMinistro;
+	}
+	
+	
+	
+
 	public List<FuncaoMembro> getFuncoes() {
 		return funcoes;
 	}
 
 	public void setFuncoes(List<FuncaoMembro> funcoes) {
 		this.funcoes = funcoes;
-	}
-
-	public String getObservacao() {
-		return observacao;
-	}
-
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
 	}
 
 	@Override
@@ -370,6 +381,20 @@ public class Membro implements Serializable{
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Membro [codigo=" + codigo + ", nome=" + nome + ", situacao=" + situacao + ", tipo=" + tipo + ", sexo="
+				+ sexo + ", dataNascimento=" + dataNascimento + ", estadoCivil=" + estadoCivil + ", cpf=" + cpf
+				+ ", rg=" + rg + ", nacionalidade=" + nacionalidade + ", profissao=" + profissao + ", naturalidade="
+				+ naturalidade + ", email=" + email + ", telefone=" + telefone + ", celular=" + celular
+				+ ", graEscolaridade=" + graEscolaridade + ", curso=" + curso + ", endereco=" + endereco + ", nomePai="
+				+ nomePai + ", nomeMae=" + nomeMae + ", dataConsagracao=" + dataConsagracao + ", dataBatismo="
+				+ dataBatismo + ", comoSeConverteu=" + comoSeConverteu + ", igrejaProcedencia=" + igrejaProcedencia
+				+ ", bastimoEspiritoSanto=" + bastimoEspiritoSanto + ", dizimista=" + dizimista + ", observacao="
+				+ observacao + ", tipoAdesao=" + tipoAdesao + ", situacaoMembro=" + situacaoMembro + ", cargoMinistro="
+				+ cargoMinistro + ", funcoes=" + funcoes + "]";
 	}
 	
 	

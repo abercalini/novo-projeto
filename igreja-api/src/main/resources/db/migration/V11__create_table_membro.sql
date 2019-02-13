@@ -5,7 +5,7 @@ CREATE TABLE membro (
 	tipo VARCHAR(50),
 	sexo VARCHAR(20),
 	data_nascimento DATE,
-	estado_civil DATE,
+	estado_civil VARCHAR(50),
 	cpf VARCHAR(30),
 	rg VARCHAR(30),
 	nacionalidade VARCHAR(30),
@@ -34,9 +34,9 @@ CREATE TABLE membro (
 	codigo_tipo_adesao BIGINT(20),
 	codigo_situacao_membro BIGINT(20),
 	codigo_cargo_ministro BIGINT(20),
-	FOREIGN KEY (codigo_tipo_adesao) REFERENCES tipo_adesao(codigo),
 	FOREIGN KEY (codigo_situacao_membro) REFERENCES situacao_membro(codigo),
-	FOREIGN KEY (codigo_cargo_ministro) REFERENCES cargo_ministro(codigo)
+	FOREIGN KEY (codigo_cargo_ministro) REFERENCES cargo_ministro(codigo),
+	FOREIGN KEY (codigo_tipo_adesao) REFERENCES tipo_adesao(codigo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE membro_funcoes (
@@ -46,3 +46,5 @@ CREATE TABLE membro_funcoes (
 	FOREIGN KEY (codigo_membro) REFERENCES membro(codigo),
 	FOREIGN KEY (codigo_funcao) REFERENCES funcao_membro(codigo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+

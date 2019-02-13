@@ -1,3 +1,4 @@
+
 export class Membro {
   codigo: number;
   nome: string;
@@ -30,7 +31,6 @@ export class Membro {
   situacaoMembro = new SituacaoMembro();
   cargoMinistro = new CargoMinistro();
   funcoes: Funcoes[] = [];
-
 }
 
 

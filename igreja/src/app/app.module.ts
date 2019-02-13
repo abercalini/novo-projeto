@@ -32,6 +32,7 @@ import { SituacaomembroService } from './situacaomembro/situacaomembro.service';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { FuncaomembroService } from './funcaomembro/funcaomembro.service';
+import { MembroService } from './membro/membro.service';
 registerLocaleData(localePt);
 
 @NgModule({
@@ -58,7 +59,8 @@ registerLocaleData(localePt);
   providers: [
     {provide: LOCALE_ID, useValue: 'pt-BR'},
     SegurancaService, JwtHelperService, MessageService, HistoricoService, FornecedorService, ConfirmationService,
-    Title, DistritoService, IgrejaService, CargoministroService, SituacaomembroService, TipoadesaoService, FuncaomembroService
+    Title, DistritoService, IgrejaService, CargoministroService, SituacaomembroService, TipoadesaoService, FuncaomembroService,
+    MembroService
   ],
   bootstrap: [AppComponent]
 })

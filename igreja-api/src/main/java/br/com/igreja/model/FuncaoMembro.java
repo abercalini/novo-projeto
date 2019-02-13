@@ -59,6 +59,11 @@ public class FuncaoMembro implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "FuncaoMembro [codigo=" + codigo + ", nome=" + nome + "]";
+	}
 	
 	
 }
