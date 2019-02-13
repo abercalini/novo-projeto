@@ -16,6 +16,11 @@ export class FuncaomembroService {
       .toPromise().then(response => response);
   }
 
+  editar(funcaoMembro: FuncaoMembro): Promise<any> {
+    return this.httpClient.put(`${this.baseUrl}/${funcaoMembro.codigo}`, JSON.stringify(funcaoMembro),
+      {headers: this.adicionarHeadersSalvar()}).toPromise().then(response => response);
+  }
+
   excluir(codigo: number): Promise<any> {
     return this.httpClient.delete(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()}).toPromise().then(null);
   }
@@ -28,11 +33,11 @@ export class FuncaomembroService {
     return this.httpClient.get(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()}).toPromise().then(response => response);
   }
 
-  
+
   adicionarHeaders() {
     let headers = new HttpHeaders();
     const token = localStorage.getItem('token');
- 
+
     headers = headers.set('Authorization', `Bearer ${token}`);
     return headers;
    }

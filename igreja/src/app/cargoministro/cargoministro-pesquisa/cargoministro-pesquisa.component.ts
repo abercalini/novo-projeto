@@ -56,12 +56,12 @@ export class CargoministroPesquisaComponent implements OnInit {
           this.listarTodos();
         })
         .catch(response => {
-          //TODO: depois de criar a tabela membro fazer as alterações 
+          // TODO: depois de criar a tabela membro fazer as alterações
           console.log(response);
           this.adicionarMensagem('error', response.message, response.message);
-        })
+        });
       }
-    })
+    });
   }
 
 }

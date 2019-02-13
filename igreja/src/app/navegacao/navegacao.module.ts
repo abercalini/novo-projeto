@@ -1,3 +1,4 @@
+import { MembroCadastroComponent } from './../membro/membro-cadastro/membro-cadastro.component';
 import { CargoministroCadastroComponent } from './../cargoministro/cargoministro-cadastro/cargoministro-cadastro.component';
 import { IgrejaPesquisaComponent } from './../igreja/igreja-pesquisa/igreja-pesquisa.component';
 import { IgrejaCadastroComponent } from '../igreja/igreja-cadastro/igreja-cadastro.component';
@@ -50,6 +51,8 @@ const router: Routes = [
   {path: 'funcaomembro/novo', component: FuncaomembroCadastroComponent},
   {path: 'funcaomembro', component: FuncaomembroPesquisaComponent},
   {path: 'funcaomembro/:codigo', component: FuncaomembroCadastroComponent},
+
+  {path : 'membro/novo', component: MembroCadastroComponent},
 
   {path: 'historico', component: HistoricoPesquisaComponent},
 

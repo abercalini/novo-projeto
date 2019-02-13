@@ -1,0 +1,80 @@
+<div class="container">
+  <form #formularioMembro="ngForm">
+    <p-fieldset legend="Cadastro de membro">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-12 ui-fluid">
+            <label>Nome</label>
+            <input type="text" pInputText  [(ngModel)]="membro.nome" name="nome" />
+        </div>
+        <div class="ui-g-6 ui-md-2 ui-fluid">
+            <label>Ativo</label>
+            <p-toggleButton [(ngModel)]="membro.situacao" name="situacao" onLabel="Sim" offLabel="Não"></p-toggleButton>
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Tipo</label>
+          <p-dropdown [options]="tipos" [(ngModel)]="membro.tipo" name="tipo" [autoWidth]="false"
+            placeholder="Selecione..." [filter]="true"></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Sexo</label>
+          <p-dropdown [options]="sexo" [(ngModel)]="membro.sexo" name="sexo" [autoWidth]="false"
+            placeholder="Selecione..." [filter]="true"></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Estado Civil</label>
+          <p-dropdown [options]="estadoCivil" [(ngModel)]="membro.estadoCivil" name="estadoCivil" [autoWidth]="false"
+            placeholder="Selecione..." [filter]="true"></p-dropdown>
+        </div>
+
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Data Nascimento</label>
+          <p-calendar [(ngModel)]="membro.dataNascimento" name="dataNascimento" dateFormat="dd/mm/yy"></p-calendar>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>CPF</label>
+          <p-inputMask [(ngModel)]="membro.cpf" mask="999.999.999-99" name="cpf"></p-inputMask>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>RG</label>
+          <input type="text" pInputText [(ngModel)]="membro.rg" name="rg" />
+        </div>
+
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Nacionalidade</label>
+          <input type="text" pInputText [(ngModel)]="membro.nacionalidade" name="nacionalidade" />
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Profissão</label>
+          <input type="text" pInputText [(ngModel)]="membro.profissao" name="profissao" />
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Naturalidade</label>
+          <input type="text" pInputText [(ngModel)]="membro.naturalidade" name="naturalidade" />
+        </div>
+
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Email</label>
+          <input type="text" pInputText [(ngModel)]="membro.email" name="email" />
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Telefone</label>
+          <input type="text" pInputText [(ngModel)]="membro.telefone" name="telefone" />
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Celular</label>
+          <p-inputMask [(ngModel)]="membro.celular" name="celular" mask="(99)999999999"></p-inputMask>
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-12 ui-fluid">
+          <h3>Dados Residênciais</h3>
+        </div>
+      </div>
+
+    </p-fieldset>
+  </form>
+</div>

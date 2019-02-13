@@ -1,3 +1,4 @@
+import { MembroModule } from './membro/membro.module';
 import { FuncaomembroModule } from './funcaomembro/funcaomembro.module';
 import { CargoministroModule } from './cargoministro/cargoministro.module';
 import { IgrejaModule } from './igreja/igreja.module';
@@ -51,8 +52,8 @@ registerLocaleData(localePt);
     CargoministroModule,
     SituacaomembroModule,
     TipoadesaoModule,
-    FuncaomembroModule
-    
+    FuncaomembroModule,
+    MembroModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'pt-BR'},

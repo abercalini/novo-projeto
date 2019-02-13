@@ -1,12 +1,12 @@
 <div class="container">
-  <form #formularioFuncao="ngForm" (ngSubmit)="salvar(formularioFuncao)">
-    
+  <form #formularioFuncao="ngForm" (ngSubmit)="preprarSalvar(formularioFuncao)">
+
     <div class="ui-g">
       <div class="ui-g-12 ui-md-12">
         <p-toast position="bottom-right"></p-toast>
       </div>
     </div>
-    
+
     <p-fieldset legend="{{editando() === true ? 'Editando ' : 'Cadastro da '}}  função do membro">
       <div class="ui-g">
         <div class="ui-g-12 ui-md-12 ui-fluid">

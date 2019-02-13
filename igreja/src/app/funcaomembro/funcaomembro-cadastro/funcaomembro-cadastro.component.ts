@@ -7,6 +7,7 @@ import { FuncaomembroService } from '../funcaomembro.service';
 import { HistoricoService } from '../../historico/historico.service';
 import { SegurancaService } from '../../seguranca/seguranca.service';
 import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-funcaomembro-cadastro',
@@ -22,14 +23,36 @@ export class FuncaomembroCadastroComponent implements OnInit {
     private messageService: MessageService,
     private historicoService: HistoricoService,
     private segurancaService: SegurancaService,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
    const codigo = this.router.snapshot.params['codigo'];
    if (codigo) {
      this.buscarPorCodigo(codigo);
+   } else {
+     this.titleService.setTitle('Cadastro da função do membro');
    }
+  }
+
+  preprarSalvar(form: NgForm) {
+    if (!this.editando()) {
+      this.salvar(form);
+    } else {
+      this.editar();
+    }
+  }
+
+  editar() {
+    this.funcaoMembroService.editar(this.funcaoMembro).then(response => {
+      this.adicionarMensagem('success', 'Alterado com sucesso', 'Alterado com sucesso');
+      this.historicoService.salvar('Alterou uma função membro ' + response.nome, this.segurancaService.nomeUsuario);
+      this.titleService.setTitle('Editando função ' + response.nome);
+    })
+    .catch(response => {
+      this.adicionarMensagem('error', response.message, response.message);
+    });
   }
 
   salvar(form: NgForm) {
@@ -42,17 +65,18 @@ export class FuncaomembroCadastroComponent implements OnInit {
     .catch(response => {
       console.log(response);
       this.adicionarMensagem('error', response.message, response.message);
-    })
+    });
   }
 
   buscarPorCodigo(codigo: number) {
     this.funcaoMembroService.buscarPorCodigo(codigo).then(response => {
       this.funcaoMembro = response;
+      this.titleService.setTitle('Editando função ' + response.nome);
     })
     .catch(response => {
       console.log(response);
       this.adicionarMensagem('error', response.message, response.message);
-    })
+    });
   }
 
   editando(): Boolean {

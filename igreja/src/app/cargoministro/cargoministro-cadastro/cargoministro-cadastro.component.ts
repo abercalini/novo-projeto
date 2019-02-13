@@ -30,19 +30,19 @@ export class CargoministroCadastroComponent implements OnInit {
 
   ngOnInit() {
     const codigo = this.router.snapshot.params['codigo'];
-    
+
     if (codigo) {
       this.buscarPorCodigo(codigo);
     } else {
       this.titleService.setTitle('Cadastro do cargo do ministro');
-    }  
+    }
   }
 
   prepararSalvar(ngForm: NgForm) {
     if (!this.editando()) {
       this.salvar(ngForm);
     } else {
-      this.editar();      
+      this.editar();
     }
   }
 
@@ -71,11 +71,11 @@ export class CargoministroCadastroComponent implements OnInit {
     this.cargoMinistroService.buscarPorCodigo(codigo).then(response => {
       this.cargoMinistro = response;
       this.adicionarTitulo();
-    }) 
+    })
       .catch(response => {
         console.log(response);
         this.adicionarMenssagem('error', response.message, response.message);
-      })
+      });
   }
 
   adicionarTitulo() {

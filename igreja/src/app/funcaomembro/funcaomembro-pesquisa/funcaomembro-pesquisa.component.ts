@@ -5,6 +5,7 @@ import { FuncaomembroService } from '../funcaomembro.service';
 import { ConfirmationService } from 'primeng/api';
 import { HistoricoService } from '../../historico/historico.service';
 import { SegurancaService } from '../../seguranca/seguranca.service';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -22,11 +23,13 @@ export class FuncaomembroPesquisaComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private historicoService: HistoricoService,
-    private segurancaService: SegurancaService
+    private segurancaService: SegurancaService,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
     this.listarTodos();
+    this.titleService.setTitle('Pesquisa da função de membro');
   }
 
   listarTodos() {
@@ -34,7 +37,7 @@ export class FuncaomembroPesquisaComponent implements OnInit {
       .catch(response => {
         console.log(response);
         this.adicionarMensagem('error', response.message, response.message);
-      })
+      });
   }
 
   excluir(codigo: number) {
@@ -50,10 +53,10 @@ export class FuncaomembroPesquisaComponent implements OnInit {
         .catch(response => {
           console.log(response);
           this.adicionarMensagem('error', response.message, response.message);
-        })
+        });
       }
     });
-    
+
   }
 
   adicionarMensagem(severity: string, detail: string, summary: string) {
