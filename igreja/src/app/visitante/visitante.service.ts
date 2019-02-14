@@ -17,6 +17,10 @@ export class VisitanteService {
       .toPromise().then(response => response);
   }
 
+  listarTodos(): Promise<any> {
+    return this.httpClient.get(this.baseUrl, {headers: this.adicionarHeaders()}).toPromise().then(response => response);
+  }
+
   buscarCep(cep: string): Promise<any> {
     return this.httpClient.get(`https://viacep.com.br/ws/${cep}/json/`).toPromise().then(response => response);
   }
@@ -27,6 +31,14 @@ export class VisitanteService {
     const token = localStorage.getItem('token');
 
     headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization', `Bearer ${token}`);
+    return headers;
+  }
+
+  adicionarHeaders() {
+    let headers = new HttpHeaders();
+    const token = localStorage.getItem('token');
+
     headers = headers.set('Authorization', `Bearer ${token}`);
     return headers;
   }

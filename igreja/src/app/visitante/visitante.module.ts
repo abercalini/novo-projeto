@@ -9,6 +9,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TableModule } from 'primeng/table';
 
 
 
@@ -27,7 +28,8 @@ import { VisitanteCadastroComponent } from './visitante-cadastro/visitante-cadas
     InputMaskModule,
     ButtonModule,
     ToastModule,
-    InputTextareaModule
+    InputTextareaModule,
+    TableModule
   ]
 })
 export class VisitanteModule { }
