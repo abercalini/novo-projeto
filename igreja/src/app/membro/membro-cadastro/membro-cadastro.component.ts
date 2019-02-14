@@ -1,3 +1,5 @@
+import { SegurancaService } from 'src/app/seguranca/seguranca.service';
+import { HistoricoService } from './../../historico/historico.service';
 import { Membro } from './../membro';
 import { Component, OnInit } from '@angular/core';
 import { MembroService } from '../membro.service';
@@ -6,9 +8,8 @@ import { CargoministroService } from '../../cargoministro/cargoministro.service'
 import { TipoadesaoService } from '../../tipoadesao/tipoadesao.service';
 import { FuncaomembroService } from '../../funcaomembro/funcaomembro.service';
 import { NgForm } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
-import { SelectItem } from 'primeng/api';
-import { FuncaoMembro } from '../../funcaomembro/funcaoMembro';
 
 
 
@@ -30,8 +31,7 @@ export class MembroCadastroComponent implements OnInit {
   dizimista = [];
   tipoAdesao = [];
   funcoes: [];
- // funcoesSelected: FuncaoMembro[];
- // funcoesSelected: FuncaoMembro[]  = [];
+
 
   constructor(
     private membroService: MembroService,
@@ -39,6 +39,9 @@ export class MembroCadastroComponent implements OnInit {
     private cargoMinistroService: CargoministroService,
     private tipoAdesaoService: TipoadesaoService,
     private funcaoMembroService: FuncaomembroService,
+    private historicoService: HistoricoService,
+    private segurancaService: SegurancaService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -55,7 +58,16 @@ export class MembroCadastroComponent implements OnInit {
 
 
   salvar(form: NgForm) {
-    this.membroService.salvar(this.membro);
+    this.membroService.salvar(this.membro).then(response => {
+      form.reset();
+      this.membro = new Membro();
+      this.adicionarMensagem('success', 'Cadastrado com sucesso', 'Cadastrado com sucesso');
+      this.historicoService.salvar('Cadastrou um membro ' + response.nome, this.segurancaService.nomeUsuario);
+    });
+  }
+
+  adicionarMensagem(severity: string, detail: string, summary: string) {
+    this.messageService.add({severity: severity, detail: detail, summary: summary});
   }
 
 

@@ -1,5 +1,12 @@
 <div class="container">
   <form #formularioMembro="ngForm" (ngSubmit)="salvar(formularioMembro)">
+
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-12">
+          <p-toast position="bottom-right"></p-toast>
+      </div>
+    </div>
+
     <p-fieldset legend="Cadastro de membro">
       <div class="ui-g">
         <div class="ui-g-12 ui-md-12 ui-fluid">
