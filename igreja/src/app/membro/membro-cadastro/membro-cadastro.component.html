@@ -1,5 +1,5 @@
 <div class="container">
-  <form #formularioMembro="ngForm" (ngSubmit)="salvar(formularioMembro)">
+  <form #formularioMembro="ngForm" (ngSubmit)="prepararSalvar(formularioMembro)">
 
     <div class="ui-g">
       <div class="ui-g-12 ui-md-12">
@@ -7,7 +7,7 @@
       </div>
     </div>
 
-    <p-fieldset legend="Cadastro de membro">
+    <p-fieldset legend="{{editando() === true ? 'Editando ' : 'Cadastro de '}}  membro">
       <div class="ui-g">
         <div class="ui-g-12 ui-md-12 ui-fluid">
             <label>Nome</label>
@@ -133,12 +133,12 @@
         <div class="ui-g-12 ui-md-12 ui-fluid">
             <h3>Dados Ministeriais</h3>
         </div>
-        <div class="ui-g-12 ui-md-5 ui-fluid">
+        <div class="ui-g-12 ui-md-6 ui-fluid">
           <label>Situação</label>
           <p-dropdown [options]="situacao" [(ngModel)]="membro.situacaoMembro.codigo" name="situacaoMembro" placeholder="Selecione..."
             [filter]="true" [autoWidth]="false" ></p-dropdown>
         </div>
-        <div class="ui-g-12 ui-md-5 ui-fluid">
+        <div class="ui-g-12 ui-md-6 ui-fluid">
           <label>Cargo Ministerial</label>
           <p-dropdown [options]="cargos" [(ngModel)]="membro.cargoMinistro.codigo" name="cargoMembro" placeholder="Selecione..."
               [filter]="true" [autoWidth]="false" ></p-dropdown>
@@ -188,13 +188,17 @@
       <div class="ui-g">
         <div class="ui-g-12 ui-md-12 ui-fluid">
           <label>Funçoes que exerce</label>
-          <p-multiSelect [options]="funcoes" [(ngModel)]="membro.funcoes" name="funcoes" defaultLabel="Selecione..."></p-multiSelect>
+          <p-multiSelect [options]="funcoes" [(ngModel)]="membro.funcoes" name="funcoes" defaultLabel="Selecione..." 
+              selectedItemsLabel="{0} Itens selecionado"></p-multiSelect>
         </div>
       </div>
 
       <div class="ui-g">
         <div class="ui-g-6 ui-md-2 ui-fluid">
-            <button pButton type="submit" label="Salvar" class="ui-button-success" icon="pi pi-plus"></button>
+              <button pButton type="submit" label="Salvar" class="ui-button-success" icon="pi pi-plus"></button>
+        </div>
+        <div class="ui-g-6 ui-md-2 ui-fluid">
+              <button pButton type="button" label="Voltar" icon="pi pi-arrow-left" routerLink="/membro"></button>
         </div>
       </div>
 

@@ -33,6 +33,8 @@ import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { FuncaomembroService } from './funcaomembro/funcaomembro.service';
 import { MembroService } from './membro/membro.service';
+import { VisitanteModule } from './visitante/visitante.module';
+import { VisitanteService } from './visitante/visitante.service';
 registerLocaleData(localePt);
 
 @NgModule({
@@ -54,13 +56,14 @@ registerLocaleData(localePt);
     SituacaomembroModule,
     TipoadesaoModule,
     FuncaomembroModule,
-    MembroModule
+    MembroModule,
+    VisitanteModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'pt-BR'},
     SegurancaService, JwtHelperService, MessageService, HistoricoService, FornecedorService, ConfirmationService,
     Title, DistritoService, IgrejaService, CargoministroService, SituacaomembroService, TipoadesaoService, FuncaomembroService,
-    MembroService
+    MembroService, VisitanteService
   ],
   bootstrap: [AppComponent]
 })

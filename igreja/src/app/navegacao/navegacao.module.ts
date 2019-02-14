@@ -21,6 +21,7 @@ import { TipoadesaoCadastroComponent } from '../tipoadesao/tipoadesao-cadastro/t
 import { TipoadesaoPesquisaComponent } from '../tipoadesao/tipoadesao-pesquisa/tipoadesao-pesquisa.component';
 import { FuncaomembroCadastroComponent } from '../funcaomembro/funcaomembro-cadastro/funcaomembro-cadastro.component';
 import { FuncaomembroPesquisaComponent } from '../funcaomembro/funcaomembro-pesquisa/funcaomembro-pesquisa.component';
+import { VisitanteCadastroComponent } from '../visitante/visitante-cadastro/visitante-cadastro.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
@@ -55,6 +56,9 @@ const router: Routes = [
 
   {path : 'membro/novo', component: MembroCadastroComponent},
   {path: 'membro', component: MembroPesquisaComponent},
+  {path : 'membro/:codigo', component: MembroCadastroComponent},
+
+  {path: 'visitante/novo', component: VisitanteCadastroComponent},
 
   {path: 'historico', component: HistoricoPesquisaComponent},
 

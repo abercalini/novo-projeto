@@ -1,21 +1,71 @@
 <div class="container">
+  <form #formularioMembro="ngForm">
+
     <p-fieldset legend="Lista de membro">
-        <p-table [value]="membros">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>#</th>
-                    <th>Nome</th>
-                    <th>Cargo Ministral</th>
-                    <th>Situação</th>
-                    <th>Ação</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-m>
-                <tr>
-                    <td>{{m.codigo}}</td>
-                    <td>{{m.nome}}</td>
-                </tr>
-            </ng-template>
-        </p-table>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-fluid">
+                <p-table [value]="membros" [responsive]="true" #tabela [paginator]="true" [rows]="10">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 80px;">#</th>
+                            <th style="width: 600px;">Nome</th>
+                            <th style="width: 180px;">Cargo Ministral</th>
+                            <th style="width: 180px;">Situação</th>
+                            <th style="width: 80px;">Ação</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-m>
+                        <tr>
+                            <td>{{m.codigo}}</td>
+                            <td>{{m.nome}}</td>
+                            <td>{{m.cargoMinistro.nome}}</td>
+                            <td>{{m.situacaoMembro.situacao}}</td>
+                            <td>
+                                <button type="button" (click)="showDialog(m.codigo)" pButton icon="pi pi-info-circle" icon="pi pi-th-large"
+                                    style="background-color: teal; border:none;"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-fluid">
+                <p-dialog header="Janela de opçoes" [(visible)]="display" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" 
+                    [maximizable]="true" [baseZIndex]="10000">
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-12 ui-fluid">
+                                <button pButton type="button" label="Excluir" class="ui-button-raised ui-button-danger" style="border: none;" icon="pi pi-times" (click)="excluir()"></button>
+                        </div>
+                        <div class="ui-g-12 ui-md-12 ui-fluid">
+                                <button pButton type="button" label="Editar" style="background-color: teal; border:none;" icon="pi pi-pencil" class="ui-button-raised ui-button-success"
+                                 (click)="editar()"></button>
+                        </div>
+                    </div>
+                </p-dialog>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-fluid">
+                <p-confirmDialog #cd header="Excluir membro" icon="pi pi-exclamation-triangle">
+                        <p-footer>
+                                <button type="button" pButton icon="pi pi-check" label="Sim, eu tenho certeza" (click)="cd.accept()" style="background-color: red; border:none;"></button>
+                                <button type="button" pButton icon="pi pi-times" label="Não" (click)="cd.reject()" style="background-color: teal; border:none;"></button>
+                        </p-footer>
+                </p-confirmDialog>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-12">
+                    <p-toast position="bottom-right"></p-toast>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-fluid">
+                    <a href="#" style="color: teal;" routerLink="/membro/novo">Adicionar Membro</a>
+            </div>
+        </div>
     </p-fieldset>
+ </form>       
 </div>

@@ -11,6 +11,9 @@ import { ButtonModule } from 'primeng/button';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ToastModule } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -31,7 +34,10 @@ import { MembroPesquisaComponent } from './membro-pesquisa/membro-pesquisa.compo
     ButtonModule,
     MultiSelectModule,
     ToastModule,
-    TableModule
+    TableModule,
+    DialogModule,
+    ConfirmDialogModule,
+    RouterModule
   ]
 })
 export class MembroModule { }

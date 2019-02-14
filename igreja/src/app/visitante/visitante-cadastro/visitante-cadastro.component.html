@@ -1,0 +1,91 @@
+<div class="container">
+  <form #formularioVisitante="ngForm" (ngSubmit)="salvar(formularioVisitante)">
+    <p-fieldset legend="Cadastro do visitante">
+          <div class="ui-g">
+              <div class="ui-g-12 ui-md-12 ui-fluid">
+                    <label>Nome</label>
+                    <input type="text" pInputText [(ngModel)]="visitante.nome" name="nome"/>
+              </div>
+              <div class="ui-g-12 ui-md-4 ui-fluid">
+                    <label>Cargo Ministerial (Caso tenha)</label>
+                    <p-dropdown [options]="visitantes" [(ngModel)]="visitante.cargoMinistro.codigo" name="cargoMinistro" [autoWidth]="false"
+                        placeholder="Selecione..." [filter]="true"></p-dropdown>
+              </div>
+          </div>
+          
+          <div class="ui-g">
+              <div class="ui-g-12 ui-md-6 ui-fluid">
+                    <label>Email</label>
+                    <input type="text" pInputText [(ngModel)]="visitante.email" name="email"/>
+              </div>
+              <div class="ui-g-12 ui-md-6 ui-fluid">
+                    <label>Telefone</label>
+                    <p-inputMask [(ngModel)]="visitante.telefone" mask="(99)9999-99999" name="telefone"></p-inputMask>
+              </div>
+          </div>
+
+          <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-fluid">
+                      <h3>Dados Residênciais</h3>
+                </div>
+          </div>
+
+          <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-fluid">
+                      <label>CEP</label>
+                      <p-inputMask [(ngModel)]="visitante.endereco.cep" mask="99999/999" name="cep" (keydown.Tab)="buscarCep(visitante.endereco.cep)"></p-inputMask>
+                </div>
+                <div class="ui-g-8 ui-md-2 ui-fluid">
+                      <label style="color: white">TESTE</label>
+                      <button pButton type="button" icon="pi pi-search" label="Pesquisar"></button>
+                </div>
+          </div>
+
+          <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-fluid">
+                      <label>Cidade</label>
+                      <input type="text" pInputText [(ngModel)]="visitante.endereco.cidade" name="cidade"/>
+                </div>
+                <div class="ui-g-12 ui-md-4 ui-fluid">
+                      <label>Bairro</label>
+                      <input type="text" pInputText [(ngModel)]="visitante.endereco.bairro" name="bairro"/>
+                </div>
+                <div class="ui-g-12 ui-md-4 ui-fluid">
+                      <label>Rua</label>
+                      <input type="text" pInputText [(ngModel)]="visitante.endereco.rua" name="rua"/>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-fluid">
+                      <label>Estado</label>
+                      <input type="text" pInputText [(ngModel)]="visitante.endereco.estado" name="estado"/>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-fluid">
+                      <label>Numero</label>
+                      <input type="text" pInputText [(ngModel)]="visitante.endereco.numero" name="numero"/>
+                </div>
+          </div>
+
+          <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-fluid">
+                      <label>Observação do visitante</label>
+                      <textarea [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize" [(ngModel)]="visitante.observacao" name="observacao"></textarea>
+                </div>
+          </div>
+
+          <div class="ui-g">
+                <div class="ui-g-6 ui-md-2 ui-fluid">
+                      <button pButton type="submit" label="Salvar" class="ui-button-success" icon="pi pi-plus"></button>
+                </div>
+                <div class="ui-g-6 ui-md-2 ui-fluid">
+                      <button pButton type="button" label="Voltar" icon="pi pi-plus" icon="pi pi-arrow-left"></button>
+                </div>
+          </div>
+    </p-fieldset>
+
+    <div class="ui-g">
+          <div class="ui-g-12 ui-md-12">
+                <p-toast position="bottom-right"></p-toast>
+          </div>
+    </div>
+
+  </form>    
+</div>
