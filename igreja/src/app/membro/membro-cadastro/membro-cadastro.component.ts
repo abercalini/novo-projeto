@@ -30,7 +30,8 @@ export class MembroCadastroComponent implements OnInit {
   dizimista = [];
   tipoAdesao = [];
   funcoes: [];
-  funcoesSelected: FuncaoMembro[]  = [];
+ // funcoesSelected: FuncaoMembro[];
+ // funcoesSelected: FuncaoMembro[]  = [];
 
   constructor(
     private membroService: MembroService,
@@ -54,27 +55,19 @@ export class MembroCadastroComponent implements OnInit {
 
 
   salvar(form: NgForm) {
-    console.log(this.funcoesSelected);
-
-    for(let func of this.funcoesSelected) {
-      let funcao: FuncaoMembro;
-      funcao.codigo = func.codigo;
-      funcao.nome = func.nome;
-      this.membro.funcoes.push(funcao);
-    }
-
     this.membroService.salvar(this.membro);
   }
 
 
   adicionarFuncoes() {
-    this.funcaoMembroService.listaTodos().then(response => this.funcoes = response.map(f => ({value: f.codigo, label: f.nome})));
+    this.funcaoMembroService.listaTodos().then(response => this.funcoes = response.map(
+      f => ({label: f.nome, value: {codigo: f.codigo, nome: f.nome}})));
   }
 
   adicionarAdesao() {
     this.tipoAdesaoService.listarTodos().then(response => this.tipoAdesao = response.map(t => ({value: t.codigo, label: t.nome})));
   }
-  
+
   adicionarCargos() {
     this.cargoMinistroService.listarTodos().then(response => {
       this.cargos = response.map(c => ({value: c.codigo, label: c.nome}));
@@ -84,11 +77,11 @@ export class MembroCadastroComponent implements OnInit {
   adiconarSituacao() {
     this.situacaoMembroService.listarTodos().then(response => {
       this.situacao = response.map(s => ({value: s.codigo, label: s.situacao}));
-    })
+    });
   }
 
   buscarCep(cep: string) {
-    cep = cep.replace('/','');
+    cep = cep.replace('/', '');
     this.membroService.buscarCep(cep).then(response => {
       this.membro.endereco.cidade = response.localidade;
       this.membro.endereco.bairro = response.logradouro;
@@ -104,7 +97,7 @@ export class MembroCadastroComponent implements OnInit {
     this.batismo = [
       {value: 'Sim', label: 'Sim'},
       {value: 'Não', label: 'Não'}
-    ]
+    ];
   }
 
   adicionarTipos() {
@@ -134,7 +127,7 @@ export class MembroCadastroComponent implements OnInit {
     this.dizimista = [
       {value: 'Sim', label: 'Sim'},
       {value: 'Não', label: 'Não'}
-    ]
+    ];
   }
 
 
