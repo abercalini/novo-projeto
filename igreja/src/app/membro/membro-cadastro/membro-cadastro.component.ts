@@ -63,6 +63,8 @@ export class MembroCadastroComponent implements OnInit {
       this.membro.funcoes.push(funcao);
     }
 
+    console.log(this.membro);
+
     this.membroService.salvar(this.membro);
   }
 
