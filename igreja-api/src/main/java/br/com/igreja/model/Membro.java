@@ -18,9 +18,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 
 @SuppressWarnings("serial")
 @Table(name = "membro")
@@ -103,7 +100,9 @@ public class Membro implements Serializable{
 	private List<FuncaoMembro> funcoes = new ArrayList<>();
 	
 	
-	
+	public Membro() {
+		
+	}
 
 	public Long getCodigo() {
 		return codigo;

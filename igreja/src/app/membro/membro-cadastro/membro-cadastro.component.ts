@@ -1,3 +1,5 @@
+import { SegurancaService } from 'src/app/seguranca/seguranca.service';
+import { HistoricoService } from './../../historico/historico.service';
 import { Membro } from './../membro';
 import { Component, OnInit } from '@angular/core';
 import { MembroService } from '../membro.service';
@@ -6,9 +8,8 @@ import { CargoministroService } from '../../cargoministro/cargoministro.service'
 import { TipoadesaoService } from '../../tipoadesao/tipoadesao.service';
 import { FuncaomembroService } from '../../funcaomembro/funcaomembro.service';
 import { NgForm } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
-import { SelectItem } from 'primeng/api';
-import { FuncaoMembro } from '../../funcaomembro/funcaoMembro';
 
 
 
@@ -30,7 +31,7 @@ export class MembroCadastroComponent implements OnInit {
   dizimista = [];
   tipoAdesao = [];
   funcoes: [];
-  funcoesSelected: FuncaoMembro[]  = [];
+
 
   constructor(
     private membroService: MembroService,
@@ -38,6 +39,9 @@ export class MembroCadastroComponent implements OnInit {
     private cargoMinistroService: CargoministroService,
     private tipoAdesaoService: TipoadesaoService,
     private funcaoMembroService: FuncaomembroService,
+    private historicoService: HistoricoService,
+    private segurancaService: SegurancaService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -54,29 +58,34 @@ export class MembroCadastroComponent implements OnInit {
 
 
   salvar(form: NgForm) {
-    console.log(this.funcoesSelected);
+    this.membroService.salvar(this.membro).then(response => {
+      form.reset();
+      this.membro = new Membro();
+      this.adicionarMensagem('success', 'Cadastrado com sucesso', 'Cadastrado com sucesso');
+      this.historicoService.salvar('Cadastrou um membro ' + response.nome, this.segurancaService.nomeUsuario);
+    });
+  }
 
-    for(let func of this.funcoesSelected) {
-      let funcao: FuncaoMembro;
-      funcao.codigo = func.codigo;
-      funcao.nome = func.nome;
-      this.membro.funcoes.push(funcao);
-    }
-
+<<<<<<< HEAD
     console.log(this.membro);
 
     this.membroService.salvar(this.membro);
+=======
+  adicionarMensagem(severity: string, detail: string, summary: string) {
+    this.messageService.add({severity: severity, detail: detail, summary: summary});
+>>>>>>> refs/remotes/origin/master
   }
 
 
   adicionarFuncoes() {
-    this.funcaoMembroService.listaTodos().then(response => this.funcoes = response.map(f => ({value: f.codigo, label: f.nome})));
+    this.funcaoMembroService.listaTodos().then(response => this.funcoes = response.map(
+      f => ({label: f.nome, value: {codigo: f.codigo, nome: f.nome}})));
   }
 
   adicionarAdesao() {
     this.tipoAdesaoService.listarTodos().then(response => this.tipoAdesao = response.map(t => ({value: t.codigo, label: t.nome})));
   }
-  
+
   adicionarCargos() {
     this.cargoMinistroService.listarTodos().then(response => {
       this.cargos = response.map(c => ({value: c.codigo, label: c.nome}));
@@ -86,11 +95,11 @@ export class MembroCadastroComponent implements OnInit {
   adiconarSituacao() {
     this.situacaoMembroService.listarTodos().then(response => {
       this.situacao = response.map(s => ({value: s.codigo, label: s.situacao}));
-    })
+    });
   }
 
   buscarCep(cep: string) {
-    cep = cep.replace('/','');
+    cep = cep.replace('/', '');
     this.membroService.buscarCep(cep).then(response => {
       this.membro.endereco.cidade = response.localidade;
       this.membro.endereco.bairro = response.logradouro;
@@ -106,7 +115,7 @@ export class MembroCadastroComponent implements OnInit {
     this.batismo = [
       {value: 'Sim', label: 'Sim'},
       {value: 'Não', label: 'Não'}
-    ]
+    ];
   }
 
   adicionarTipos() {
@@ -136,7 +145,7 @@ export class MembroCadastroComponent implements OnInit {
     this.dizimista = [
       {value: 'Sim', label: 'Sim'},
       {value: 'Não', label: 'Não'}
-    ]
+    ];
   }
 
 

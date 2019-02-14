@@ -1,5 +1,12 @@
 <div class="container">
   <form #formularioMembro="ngForm" (ngSubmit)="salvar(formularioMembro)">
+
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-12">
+          <p-toast position="bottom-right"></p-toast>
+      </div>
+    </div>
+
     <p-fieldset legend="Cadastro de membro">
       <div class="ui-g">
         <div class="ui-g-12 ui-md-12 ui-fluid">
@@ -80,7 +87,7 @@
           <p-inputMask [(ngModel)]="membro.endereco.cep" mask="99999/999" (keydown.Tab)="buscarCep(membro.endereco.cep)" name="cep"></p-inputMask>
         </div>
         <div class="ui-g-12 ui-md-2 ui-fluid">
-           <label style="color: white;">AA</label> 
+           <label style="color: white;">AA</label>
           <button pButton type="button" label="Pesquisar" icon="pi pi-search"></button>
         </div>
       </div>
@@ -148,7 +155,7 @@
           <p-calendar [(ngModel)]="membro.dataBatismo" name="dataBatismo" dateFormat="dd/mm/yy"></p-calendar>
         </div>
       </div>
-      
+
       <div class="ui-g">
         <div class="ui-g-12 ui-md-6 ui-fluid">
           <label>Como se converteu</label>
@@ -181,7 +188,7 @@
       <div class="ui-g">
         <div class="ui-g-12 ui-md-12 ui-fluid">
           <label>Funçoes que exerce</label>
-          <p-multiSelect [options]="funcoes" [(ngModel)]="funcoesSelected" name="funcoes" defaultLabel="Selecione..."></p-multiSelect>
+          <p-multiSelect [options]="funcoes" [(ngModel)]="membro.funcoes" name="funcoes" defaultLabel="Selecione..."></p-multiSelect>
         </div>
       </div>
 
@@ -190,7 +197,7 @@
             <button pButton type="submit" label="Salvar" class="ui-button-success" icon="pi pi-plus"></button>
         </div>
       </div>
-      
+
 
 
     </p-fieldset>

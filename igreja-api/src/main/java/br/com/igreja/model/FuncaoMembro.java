@@ -18,7 +18,7 @@ public class FuncaoMembro implements Serializable {
 	private Long codigo;
 	
 	private String nome;
-
+	
 	public Long getCodigo() {
 		return codigo;
 	}

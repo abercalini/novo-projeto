@@ -9,13 +9,16 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ButtonModule } from 'primeng/button';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
 
 
 
 import { MembroCadastroComponent } from './membro-cadastro/membro-cadastro.component';
+import { MembroPesquisaComponent } from './membro-pesquisa/membro-pesquisa.component';
 
 @NgModule({
-  declarations: [MembroCadastroComponent],
+  declarations: [MembroCadastroComponent, MembroPesquisaComponent],
   imports: [
     CommonModule,
     FieldsetModule,
@@ -26,7 +29,9 @@ import { MembroCadastroComponent } from './membro-cadastro/membro-cadastro.compo
     CalendarModule,
     InputMaskModule,
     ButtonModule,
-    MultiSelectModule
+    MultiSelectModule,
+    ToastModule,
+    TableModule
   ]
 })
 export class MembroModule { }

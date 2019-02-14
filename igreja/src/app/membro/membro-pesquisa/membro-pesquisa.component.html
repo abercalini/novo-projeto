@@ -1,0 +1,21 @@
+<div class="container">
+    <p-fieldset legend="Lista de membro">
+        <p-table [value]="membros">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Cargo Ministral</th>
+                    <th>Situação</th>
+                    <th>Ação</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-m>
+                <tr>
+                    <td>{{m.codigo}}</td>
+                    <td>{{m.nome}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-fieldset>
+</div>

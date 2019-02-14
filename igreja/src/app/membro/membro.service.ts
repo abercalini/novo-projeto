@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Membro } from './membro';
-import { locateHostElement } from '@angular/core/src/render3/instructions';
 
 @Injectable({
   providedIn: 'root'
@@ -17,23 +16,29 @@ export class MembroService {
   }
 
   salvar(membro: Membro): Promise<any> {
-
-    console.log(membro);
-    console.log(JSON.stringify(membro));
-    
-    
-    
     return this.httpClient.post(this.baseUrl, JSON.stringify(membro), {headers : this.adicionarHeadersSalvar()})
       .toPromise().then(response => response);
+  }
+
+  listarTodos(): Promise<any> {
+    return this.httpClient.get(this.baseUrl, {headers: this.adicionarHeaders()}).toPromise().then(response => response);
   }
 
   adicionarHeadersSalvar() {
     let headers = new HttpHeaders();
     const token = localStorage.getItem('token');
 
-    headers = headers.set('Content-Type','application/json');
+    headers = headers.set('Content-Type', 'application/json');
     headers = headers.set('Authorization', `Bearer ${token}`);
     return headers;
   }
-  
+
+  adicionarHeaders() {
+    let headers = new HttpHeaders();
+    const token = localStorage.getItem('token');
+
+    headers = headers.set('Authorization', `Bearer ${token}`);
+    return headers;
+  }
+
 }
