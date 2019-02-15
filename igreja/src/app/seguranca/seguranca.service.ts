@@ -75,6 +75,10 @@ export class SegurancaService {
     }
   }
 
+  logout() {
+
+  }
+
 
 
 }

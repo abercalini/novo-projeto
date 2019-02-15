@@ -11,7 +11,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { SegurancaModule } from './seguranca/seguranca.module';
 import { NavegacaoModule } from './navegacao/navegacao.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TipoadesaoModule } from './tipoadesao/tipoadesao.module';
 import { SituacaomembroModule } from './situacaomembro/situacaomembro.module';
 
@@ -35,6 +35,7 @@ import { FuncaomembroService } from './funcaomembro/funcaomembro.service';
 import { MembroService } from './membro/membro.service';
 import { VisitanteModule } from './visitante/visitante.module';
 import { VisitanteService } from './visitante/visitante.service';
+import { RefreshTokenInterceptor } from './seguranca/RefreshTokenInterceptor';
 registerLocaleData(localePt);
 
 @NgModule({
@@ -60,7 +61,14 @@ registerLocaleData(localePt);
     VisitanteModule
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'pt-BR'},
+    {provide: LOCALE_ID, useValue: 'pt-BR',},
+    
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RefreshTokenInterceptor,
+      multi: true
+    },
+    
     SegurancaService, JwtHelperService, MessageService, HistoricoService, FornecedorService, ConfirmationService,
     Title, DistritoService, IgrejaService, CargoministroService, SituacaomembroService, TipoadesaoService, FuncaomembroService,
     MembroService, VisitanteService
