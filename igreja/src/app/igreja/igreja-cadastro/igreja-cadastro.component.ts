@@ -54,19 +54,15 @@ export class IgrejaCadastroComponent implements OnInit {
   }
 
   editar() {
-    this.igrejaService.editar(this.igreja).then(response => {
+    this.igrejaService.editar(this.igreja).subscribe(response => {
       this.historicoService.salvar('Igreja editada ' + response.nome, this.segurancaService.nomeUsuario);
       this.adicionarMensagem('success', 'Igreja editada com sucesso', 'Igreja editada com sucesso');
       this.adicionarTitulo();
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 
   salvar(ngForm: NgForm) {
-    this.igrejaService.salvar(this.igreja).then(response => {
+    this.igrejaService.salvar(this.igreja).subscribe(response => {
       ngForm.reset();
       this.igreja = new Igreja();
       this.adicionarMensagem('success', 'Igreja Cadastrado com suceso', 'Igreja Cadastrado com suceso');
@@ -75,20 +71,15 @@ export class IgrejaCadastroComponent implements OnInit {
   }
 
   buscarPorCodigo(codigo: number) {
-    this.igrejaService.buscarPorCodigo(codigo).then(respnse => {
-
+    this.igrejaService.buscarPorCodigo(codigo).subscribe(respnse => {
       this.igreja = respnse;
       this.adicionarTitulo();
-
-    }).catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 
   eventTab(cep: string) {
     cep = cep.replace('-', '');
-    this.igrejaService.buscarPorCep(cep).then(response => {
+    this.igrejaService.buscarPorCep(cep).subscribe(response => {
       this.igreja.endereco.rua = response.logradouro;
       this.igreja.endereco.cep = response.cep;
       this.igreja.endereco.cidade = response.localidade;
@@ -97,11 +88,8 @@ export class IgrejaCadastroComponent implements OnInit {
   }
 
   listarDistritos() {
-    this.distritoService.listarTodos().then(response => {
+    this.distritoService.listarTodos().subscribe(response => {
       this.distritos = response.map(d => ({label: d.nome, value: d.codigo}));
-    }).catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 

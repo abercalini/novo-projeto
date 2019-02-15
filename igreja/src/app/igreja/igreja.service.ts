@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 import { Igreja } from './igreja';
 import { IgrejaFilter } from './igrejaFilter';
 
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,38 +15,37 @@ export class IgrejaService {
   baseUrl = 'http://localhost:8080/igreja';
   constructor(private httpClient: HttpClient) { }
 
-  salvar(igreja: Igreja): Promise<any> {
-    return this.httpClient.post(`${this.baseUrl}`, JSON.stringify(igreja), {headers : this.adicionarHeadersSalvar()})
-      .toPromise().then(response => response);
+  salvar(igreja: Igreja): Observable<Igreja> {
+    return this.httpClient.post<Igreja>(`${this.baseUrl}`, JSON.stringify(igreja), {headers : this.adicionarHeadersSalvar()})
+      .map(response => response);
   }
 
-  editar(igreja: Igreja): Promise<any> {
-    return this.httpClient.put(`${this.baseUrl}/${igreja.codigo}`, JSON.stringify(igreja), {headers : this.adicionarHeadersSalvar()})
-      .toPromise().then(response => response);
+  editar(igreja: Igreja): Observable<Igreja> {
+    return this.httpClient.put<Igreja>(`${this.baseUrl}/${igreja.codigo}`, JSON.stringify(igreja), {headers : this.adicionarHeadersSalvar()})
+      .map(response => response);
   }
 
-  excluir(codigo: number): Promise<any> {
-    return this.httpClient.delete(`${this.baseUrl}/${codigo}`, {headers : this.adicionarHeaders()})
-      .toPromise().then(null);
+  excluir(codigo: number): Observable<Igreja> {
+    return this.httpClient.delete<Igreja>(`${this.baseUrl}/${codigo}`, {headers : this.adicionarHeaders()});
   }
 
-  buscarPorCodigo(codigo: number): Promise<any> {
-    return this.httpClient.get(`${this.baseUrl}/${codigo}`, {headers : this.adicionarHeaders()})
-      .toPromise().then(response => response);
+  buscarPorCodigo(codigo: number): Observable<Igreja> {
+    return this.httpClient.get<Igreja>(`${this.baseUrl}/${codigo}`, {headers : this.adicionarHeaders()})
+      .map(response => response);
   }
 
-  listarTodosParams(igrejaFilter: IgrejaFilter): Promise<any> {
+  listarTodosParams(igrejaFilter: IgrejaFilter): Observable<any> {
     let params = new HttpParams();
     if (igrejaFilter.nome) {
       params = params.set('nome', igrejaFilter.nome);
     }
 
-    return this.httpClient.get(`${this.baseUrl}`, {params, headers: this.adicionarHeaders()})
-      .toPromise().then(response => response);
+    return this.httpClient.get<any>(`${this.baseUrl}`, {params, headers: this.adicionarHeaders()})
+      .map(response => response);
   }
 
-  buscarPorCep(cep: string): Promise<any> {
-    return this.httpClient.get(`https://viacep.com.br/ws/${cep}/json/`).toPromise().then(response => response);
+  buscarPorCep(cep: string): Observable<any> {
+    return this.httpClient.get<any>(`https://viacep.com.br/ws/${cep}/json/`).map(response => response);
   }
 
   adicionarHeadersSalvar() {

@@ -46,30 +46,23 @@ export class DistricoCadastroComponent implements OnInit {
   }
 
   salvar(ngForm: NgForm) {
-    this.distritoService.salvar(this.distrito).then(response => {
+    this.distritoService.salvar(this.distrito).subscribe(response => {
       this.historicoService.salvar('Cadastro do Distrito ' + response.nome, this.segurancaService.nomeUsuario);
       this.adicionarMensagem('success', 'Distrito cadastrado com sucesso', 'Distrito cadastrado com sucesso');
       ngForm.reset();
-    })
-    .catch(response => {
-      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 
   editar() {
-    this.distritoService.editar(this.distrito).then(() => {
+    this.distritoService.editar(this.distrito).subscribe(() => {
       this.historicoService.salvar('Editando Distrito', this.segurancaService.nomeUsuario);
       this.adicionarMensagem('success', 'Distrito editado com sucesso', 'Distrito editado com sucesso');
       this.titleService.setTitle('Editando Distrito ' + this.distrito.nome);
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 
   buscarPorCodigo(codigo: number) {
-    this.distritoService.buscarPorCodigo(codigo).then(response => {
+    this.distritoService.buscarPorCodigo(codigo).subscribe(response => {
       this.distrito = response;
       this.titleService.setTitle('Editando Distrito ' + this.distrito.nome);
     });

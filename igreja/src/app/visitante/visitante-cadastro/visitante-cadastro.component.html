@@ -1,6 +1,6 @@
 <div class="container">
-  <form #formularioVisitante="ngForm" (ngSubmit)="salvar(formularioVisitante)">
-    <p-fieldset legend="Cadastro do visitante">
+  <form #formularioVisitante="ngForm" (ngSubmit)="prepararSalvar(formularioVisitante)">
+    <p-fieldset legend="{{editando() === true ? 'Edição ' : 'Cadastro '}} do visitante">
           <div class="ui-g">
               <div class="ui-g-12 ui-md-12 ui-fluid">
                     <label>Nome</label>
@@ -8,7 +8,7 @@
               </div>
               <div class="ui-g-12 ui-md-4 ui-fluid">
                     <label>Cargo Ministerial (Caso tenha)</label>
-                    <p-dropdown [options]="visitantes" [(ngModel)]="visitante.cargoMinistro.codigo" name="cargoMinistro" [autoWidth]="false"
+                    <p-dropdown [options]="cargos" [(ngModel)]="visitante.cargoMinistro.codigo" name="cargoMinistro" [autoWidth]="false"
                         placeholder="Selecione..." [filter]="true"></p-dropdown>
               </div>
           </div>
@@ -76,7 +76,7 @@
                       <button pButton type="submit" label="Salvar" class="ui-button-success" icon="pi pi-plus"></button>
                 </div>
                 <div class="ui-g-6 ui-md-2 ui-fluid">
-                      <button pButton type="button" label="Voltar" icon="pi pi-plus" icon="pi pi-arrow-left"></button>
+                      <button pButton type="button" label="Voltar" icon="pi pi-plus" icon="pi pi-arrow-left" routerLink="/visitante"></button>
                 </div>
           </div>
     </p-fieldset>

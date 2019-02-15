@@ -3,6 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +23,33 @@ export class SegurancaService {
     this.carregarToken();
   }
 
-  logar(email: string, senha: string): Promise<any> {
+  logar(email: string, senha: string): Observable<any> {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'Basic YW5ndWxhcjphbmd1bGFy');
     headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
     const body = `username=${email}&password=${senha}&grant_type=password`;
 
-    return this.httpClient.post(`${this.baseUrl}`, body, {headers})
-      .toPromise().then(response => {
+    return this.httpClient.post<any>(`${this.baseUrl}`, body, {headers, withCredentials: true})
+      .map(response => {
+        this.tokenPayload = response;
+        this.armazenarToken(this.tokenPayload.access_token);
+
+       // console.log('Response com token payload');
+      //  console.log(this.tokenPayload);
+        
+      });
+  }
+
+  novoAccessToken(): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Basic YW5ndWxhcjphbmd1bGFy');
+    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    const body = `grant_type=refresh_token`;
+
+    return this.httpClient.post(this.baseUrl, body, {headers, withCredentials: true})
+      .map(response => {
         this.tokenPayload = response;
         this.armazenarToken(this.tokenPayload.access_token);
       });
@@ -37,6 +59,13 @@ export class SegurancaService {
     localStorage.setItem('token', token);
     this.tokenDecodificado = this.helper.decodeToken(token);
     this.nomeUsuario = this.tokenDecodificado.user_name;
+
+    //console.log('Token decoficado');
+    // console.log(this.tokenDecodificado);
+
+  //  console.log('Nome do usuario');
+    // console.log(this.nomeUsuario);
+    
   }
 
   carregarToken() {

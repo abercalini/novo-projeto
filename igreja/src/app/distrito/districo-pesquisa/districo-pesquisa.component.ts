@@ -36,28 +36,20 @@ export class DistricoPesquisaComponent implements OnInit {
   }
 
   listarTodos() {
-    this.distritoService.listarTodos().then(response => this.distritos = response)
-      .catch(response => console.log(response));
+    this.distritoService.listarTodos().subscribe(response => {
+      this.distritos = response;
+    });
   }
 
   excluir(codigo: number) {
     this.confirmationService.confirm({
       message: 'Deseja excluir o distrito ?',
       accept: () => {
-        this.distritoService.excluir(codigo).then(() => {
+        this.distritoService.excluir(codigo).subscribe(() => {
           this.tabela.first = 0;
           this.listarTodos();
           this.adicionarMensagem('success', 'Excluido com sucesso', 'Excluido com sucesso');
           this.historicoService.salvar('Excluiu um distrito', this.segurancaService.nomeUsuario);
-        })
-        .catch(response => {
-          console.log(response);
-          if (response.status === 500) {
-            this.mensagem.push({severity: 'error', summary: 'Distrito não pode ser excluido', detail:
-              ', está sendo usada em outra tabela'});
-            return ;
-          }
-          this.adicionarMensagem('error', response.message, response.message);
         });
       }
     });

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import {MenuItem} from 'primeng/api';
+import { SegurancaService } from '../../seguranca/seguranca.service';
 
 @Component({
   selector: 'app-menu',
@@ -11,7 +12,7 @@ export class MenuComponent implements OnInit {
 
   items: MenuItem[];
 
-  constructor() { }
+  constructor(private segurancaService: SegurancaService) { }
 
   ngOnInit() {
     this.items = [{
@@ -39,6 +40,12 @@ export class MenuComponent implements OnInit {
           {label: 'Log do sistema', icon: 'pi pi-clock', routerLink: ['/historico']},
       ]
     }];
+  }
+
+  accessToken() {
+    this.segurancaService.novoAccessToken().subscribe(response => {
+      console.log(response);
+    });
   }
 
 }

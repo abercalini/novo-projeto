@@ -23,12 +23,12 @@ export class LoginComponent implements OnInit {
   }
 
   logar(email: string, senha: string) {
-    this.segurancaService.logar(email, senha).then(() => {
+    this.segurancaService.logar(email, senha).subscribe(response => {
       this.historicoService.salvar('Entrou no sistema', this.segurancaService.nomeUsuario);
       this.router.navigate(['/pagina-nao-encontrada']);
-    })
-    .catch(() => {
-      this.messageService.add({severity: 'error', summary: 'Usuário ou senha invalido', detail: 'Usuário ou senha invalido'});
     });
+    /*.catch(() => {
+      this.messageService.add({severity: 'error', summary: 'Usuário ou senha invalido', detail: 'Usuário ou senha invalido'});
+    }); */
   }
 }

@@ -49,19 +49,16 @@ export class FornecedorCadastroComponent implements OnInit {
   }
 
   salvar(ngForm: NgForm) {
-    this.fornecedorService.salvar(this.fornecedor).then(response => {
+    this.fornecedorService.salvar(this.fornecedor).subscribe(response => {
       this.posicao = 0;
       this.historicoService.salvar('Cadastro de fornecedor/Colaborador ' + response.nome, this.segurancaService.nomeUsuario);
       ngForm.reset();
       this.messageService.add({severity: 'success', summary: 'Cadastrado com sucesso', detail: 'Cadastrado com sucesso'});
-    })
-      .catch(response => {
-        this.messageService.add({severity: 'error', summary: 'Erro ao tentar cadastrar', detail: response.message});
-      });
+    });
   }
 
   editar() {
-    this.fornecedorService.editar(this.fornecedor).then(response => {
+    this.fornecedorService.editar(this.fornecedor).subscribe(response => {
       this.messageService.add({severity: 'success', summary: 'Editado com sucesso', detail: 'Editado com sucesso'});
       this.adicionarTitulo();
       this.historicoService.salvar('Edição do fornecedor / colaborador ' + response.nome, this.segurancaService.nomeUsuario);
@@ -69,24 +66,19 @@ export class FornecedorCadastroComponent implements OnInit {
   }
 
   buscarPorCodigo(codigo: number) {
-    this.fornecedorService.buscarPorCodigo(codigo).then(response => {
+    this.fornecedorService.buscarPorCodigo(codigo).subscribe(response => {
       this.fornecedor = response;
       this.adicionarTitulo();
-    })
-    .catch(response => {
-      this.messageService.add({severity: 'error', summary: response.message, detail: response.message});
     });
   }
 
   buscarCep(cep: string) {
     const cepAux = cep.replace('/', '');
-    this.fornecedorService.buscarCep(cepAux).then(response => {
+    this.fornecedorService.buscarCep(cepAux).subscribe(response => {
       this.fornecedor.endereco.cep = response.cep;
       this.fornecedor.endereco.bairro = response.logradouro;
       this.fornecedor.endereco.cidade = response.localidade;
       this.fornecedor.endereco.estado = response.uf;
-    }).catch(() => {
-      this.messageService.add({severity: 'error', summary: 'Cep invalido', detail: 'Cep invalido'});
     });
   }
 

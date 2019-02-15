@@ -3,6 +3,8 @@
     <div class="ui-g-12">
         <p-menu #menu [popup]="true" [model]="items"></p-menu>
         <button type="button" pButton icon="pi pi-fw pi-list" label="Menu" (click)="menu.toggle($event)"></button>
+        
+        <button pButton type="button" label="New access Token" (click)="accessToken()"></button>
     </div>
   </div>
 </div>

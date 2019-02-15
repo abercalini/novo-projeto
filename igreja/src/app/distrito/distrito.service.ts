@@ -2,6 +2,10 @@ import { Distrito } from './distrito';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,28 +15,27 @@ export class DistritoService {
 
   constructor(private httpClient: HttpClient) {}
 
-  salvar(distrito: Distrito): Promise<any> {
-    return this.httpClient.post(`${this.baseUrl}`, JSON.stringify(distrito), {headers : this.adicionarHeadersSalvar()})
-      .toPromise().then(response => response);
+  salvar(distrito: Distrito): Observable<Distrito> {
+    return this.httpClient.post<Distrito>(`${this.baseUrl}`, JSON.stringify(distrito), {headers : this.adicionarHeadersSalvar()})
+      .map(response => response);
   }
 
-  editar(distrito: Distrito): Promise<any> {
-    return this.httpClient.put(`${this.baseUrl}/${distrito.codigo}`, JSON.stringify(distrito), {headers: this.adicionarHeadersSalvar()})
-      .toPromise().then();
+  editar(distrito: Distrito): Observable<Distrito> {
+    return this.httpClient.put<Distrito>(`${this.baseUrl}/${distrito.codigo}`, JSON.stringify(distrito), {headers: this.adicionarHeadersSalvar()})
+      .map(response => response);
   }
 
-  excluir(codigo: number): Promise<any> {
-    return this.httpClient.delete(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()})
-      .toPromise().then(null);
+  excluir(codigo: number): Observable<Distrito> {
+    return this.httpClient.delete<Distrito>(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()});
   }
 
-  listarTodos(): Promise<any> {
-    return this.httpClient.get(`${this.baseUrl}`, {headers: this.adicionarHeaders()}).toPromise().then(response => response);
+  listarTodos(): Observable<any> {
+    return this.httpClient.get<any>(`${this.baseUrl}`, {headers: this.adicionarHeaders()}).map(response => response);
   }
 
-  buscarPorCodigo(codigo: number): Promise<any> {
-    return this.httpClient.get(`${this.baseUrl}/${codigo}`, {headers : this.adicionarHeaders()})
-      .toPromise().then(response => response);
+  buscarPorCodigo(codigo: number): Observable<Distrito> {
+    return this.httpClient.get<Distrito>(`${this.baseUrl}/${codigo}`, {headers : this.adicionarHeaders()})
+      .map(response => response);
   }
 
 

@@ -23,22 +23,26 @@ export class VisitanteService {
       .map(response => response);
   }
 
-
-  excluir(codigo: number): Promise<any> {
-    return this.httpClient.delete(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()})
-      .toPromise().then(null);
+  editar(visitante: Visitante): Observable<Visitante> {
+    return this.httpClient.put<Visitante>(`${this.baseUrl}/${visitante.codigo}`, JSON.stringify(visitante)
+    , {headers: this.adicionarHeadersSalvar()}).map(response => response);
   }
 
-  buscarPorCodigo(codigo: number): Promise<any> {
-    return this.httpClient.get(`${this.baseUrl}/${codigo}`).toPromise().then(response => response);
+
+  excluir(codigo: number): Observable<Visitante> {
+    return this.httpClient.delete<Visitante>(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()});
   }
 
-  listarTodos(visitanteFilter: VisitanteFilter): Promise<any> {
+  buscarPorCodigo(codigo: number): Observable<Visitante> {
+    return this.httpClient.get<Visitante>(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()}).map(response => response);
+  }
+
+  listarTodos(visitanteFilter: VisitanteFilter): Observable<any> {
     let params = new HttpParams();
     if (visitanteFilter.nome) {
       params = params.set('nome', visitanteFilter.nome);
     }
-    return this.httpClient.get(this.baseUrl, {params, headers: this.adicionarHeaders()}).toPromise().then(response => response);
+    return this.httpClient.get<any>(this.baseUrl, {params, headers: this.adicionarHeaders()}).map(response => response);
   }
 
   buscarCep(cep: string): Observable<any> {

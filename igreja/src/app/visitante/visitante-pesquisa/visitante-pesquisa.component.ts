@@ -5,6 +5,7 @@ import { VisitanteService } from './../visitante.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -24,15 +25,17 @@ export class VisitantePesquisaComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private segurancaService: SegurancaService,
-    private historicoService: HistoricoService
+    private historicoService: HistoricoService,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
     this.pesquisar();
+    this.titleService.setTitle('Pesquisas de visitantes');
   }
 
   pesquisar() {
-    this.visitanteService.listarTodos(this.visitanteFilter).then(response => this.visitantes = response);
+    this.visitanteService.listarTodos(this.visitanteFilter).subscribe(response => this.visitantes = response);
   }
 
 
@@ -40,7 +43,7 @@ export class VisitantePesquisaComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Deseja excluir o visitante?',
       accept: () => {
-        this.visitanteService.excluir(codigo).then(() => {
+        this.visitanteService.excluir(codigo).subscribe(() => {
           this.adicionarMensagem('success', 'Excluido com sucesso', 'Excluido com sucesso');
           this.tabela.first = 0;
           this.pesquisar();

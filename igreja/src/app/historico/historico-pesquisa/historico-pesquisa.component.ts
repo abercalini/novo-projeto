@@ -27,10 +27,7 @@ export class HistoricoPesquisaComponent implements OnInit {
 
   listarTodos() {
     this.historicoFilter.usuario = this.pesquisarUsuario;
-    this.historicoService.listar(this.historicoFilter).then(response => this.historicos = response)
-    .catch(() => {
-      this.messageService.add({severity: 'error', detail: 'Erro ao listar o histórico', summary: 'Erro ao listar o histórico'});
-    });
+    this.historicoService.listar(this.historicoFilter).subscribe(response => this.historicos = response);
   }
 
 }

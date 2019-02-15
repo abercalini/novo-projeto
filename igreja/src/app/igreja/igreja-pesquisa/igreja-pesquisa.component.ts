@@ -38,7 +38,7 @@ export class IgrejaPesquisaComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Deseja excluir a igreja?',
       accept: () => {
-        this.igrejaService.excluir(codigo).then(() => {
+        this.igrejaService.excluir(codigo).subscribe(() => {
           this.adicionarMensagem('success', 'Excluido com sucesso', 'Excluido com sucesso');
           this.historicoService.salvar('Excluido uma igreja ', this.segurancaService.nomeUsuario);
           this.tabela.fist = 0;
@@ -49,12 +49,8 @@ export class IgrejaPesquisaComponent implements OnInit {
   }
 
   pesquisar() {
-    this.igrejaService.listarTodosParams(this.igrejaFilter).then(response => {
+    this.igrejaService.listarTodosParams(this.igrejaFilter).subscribe(response => {
       this.igrejas = response;
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 

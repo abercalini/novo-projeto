@@ -19,7 +19,7 @@ import { Title } from '@angular/platform-browser';
 export class VisitanteCadastroComponent implements OnInit {
 
   visitante = new Visitante();
-  visitantes = [];
+  cargos = [];
 
   constructor(
     private cargoMinistroService: CargoministroService,
@@ -32,17 +32,20 @@ export class VisitanteCadastroComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.listarVisitantes();
+    this.listarCargos();
     const codigo = this.router.snapshot.params['codigo'];
+    if (codigo) {
+      this.buscarPorCodigo(codigo);
+    } else {
+      this.titleService.setTitle('Cadastro do visitante');
+    }
+
   }
 
   buscarPorCodigo(codigo: number) {
-    this.visitanteService.buscarPorCodigo(codigo).then(response => {
-
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
+    this.visitanteService.buscarPorCodigo(codigo).subscribe(response => {
+      this.visitante = response;
+      this.adicionarTitulo();
     });
   }
 
@@ -65,9 +68,29 @@ export class VisitanteCadastroComponent implements OnInit {
     });
   }
 
- /* listarVisitantes() {
-    this.visitanteService.listarTodos().then(response => this.visitantes = response);
-  }*/
+  editar() {
+    this.visitanteService.editar(this.visitante).subscribe(response => {
+      this.historicoService.salvar('Editou um visitante ' + response.nome, this.segurancaService.nomeUsuario);
+      this.adicionarMensagem('success', 'Editou com sucesso', 'Editou com sucesso');
+      this.adicionarTitulo();
+    });
+  }
+
+  prepararSalvar(form: NgForm) {
+    if (!this.editando()) {
+      this.salvar(form);
+    } else {
+      this.editar();    
+    }
+  }
+
+  editando(): Boolean {
+    return Boolean(this.visitante.codigo);
+  }
+
+  listarCargos() {
+    this.cargoMinistroService.listarTodos().subscribe(response => this.cargos = response.map(c => ({label: c.nome, value: c.codigo})));
+  }
 
   adicionarTitulo() {
     this.titleService.setTitle('Editando visitante ' + this.visitante.nome);

@@ -4,6 +4,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,24 +18,23 @@ export class FornecedorService {
 
   constructor(private httpClient: HttpClient) {}
 
-  salvar(fornecedor: Fornecedor): Promise<any> {
-    return this.httpClient.post(`${this.urlBase}`, JSON.stringify(fornecedor), {headers : this.cadastrarHeadersSalvar()})
-      .toPromise().then(response => response);
+  salvar(fornecedor: Fornecedor): Observable<Fornecedor> {
+    return this.httpClient.post<Fornecedor>(`${this.urlBase}`, JSON.stringify(fornecedor), {headers : this.cadastrarHeadersSalvar()})
+      .map(response => response);
   }
 
-  editar(fornecedor: Fornecedor): Promise<any> {
-    return this.httpClient.put(`${this.urlBase}/${fornecedor.codigo}`, JSON.stringify(fornecedor), {headers: this.cadastrarHeadersSalvar()})
-      .toPromise().then(response => response);
+  editar(fornecedor: Fornecedor): Observable<Fornecedor> {
+    return this.httpClient.put<Fornecedor>(`${this.urlBase}/${fornecedor.codigo}`, JSON.stringify(fornecedor), {headers: this.cadastrarHeadersSalvar()})
+      .map(response => response);
   }
 
-  excluir(codigo: number): Promise<any> {
-    return this.httpClient.delete(`${this.urlBase}/${codigo}`, {headers : this.adicionarHeaeders()})
-      .toPromise().then(null);
+  excluir(codigo: number): Observable<Fornecedor> {
+    return this.httpClient.delete<Fornecedor>(`${this.urlBase}/${codigo}`, {headers : this.adicionarHeaeders()});
   }
 
-  buscarPorCodigo(codigo: number): Promise<any> {
-    return this.httpClient.get(`${this.urlBase}/${codigo}`, {headers: this.adicionarHeaeders()})
-      .toPromise().then(response => {
+  buscarPorCodigo(codigo: number): Observable<Fornecedor> {
+    return this.httpClient.get<Fornecedor>(`${this.urlBase}/${codigo}`, {headers: this.adicionarHeaeders()})
+      .map(response => {
         const fornecedor = response as Fornecedor;
 
         this.converterStringToDate([fornecedor]);
@@ -40,21 +43,21 @@ export class FornecedorService {
       });
   }
 
-  listarTodos(): Promise<any> {
-    return this.httpClient.get(`${this.urlBase}`, {headers: this.adicionarHeaeders()}).toPromise().then(response => response);
+  listarTodos(): Observable<any> {
+    return this.httpClient.get<any>(`${this.urlBase}`, {headers: this.adicionarHeaeders()}).map(response => response);
   }
 
-  listarTodosParams(fornecedorFilter: FornecedorFilter): Promise<any> {
+  listarTodosParams(fornecedorFilter: FornecedorFilter): Observable<any> {
     let params = new HttpParams();
     if (fornecedorFilter.nome) {
       params = params.append('nome', fornecedorFilter.nome);
     }
-    return this.httpClient.get(`${this.urlBase}`, {params, headers: this.adicionarHeaeders()}).toPromise().then(response => response);
+    return this.httpClient.get<any>(`${this.urlBase}`, {params, headers: this.adicionarHeaeders()}).map(response => response);
   }
 
-  buscarCep(cep: string): Promise<any> {
-    return this.httpClient.get(`https://viacep.com.br/ws/${cep}/json/`)
-      .toPromise().then(response => response);
+  buscarCep(cep: string): Observable<any> {
+    return this.httpClient.get<any>(`https://viacep.com.br/ws/${cep}/json/`)
+      .map(response => response);
   }
 
   private converterStringToDate(fornecedores: [Fornecedor]) {
