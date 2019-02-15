@@ -40,14 +40,10 @@ export class SituacaomembroCadastroComponent implements OnInit {
   }
 
   buscarPorCodigo(codigo: number) {
-    this.situacaoMembroService.buscarPorCodigo(codigo).then(response => {
+    this.situacaoMembroService.buscarPorCodigo(codigo).subscribe(response => {
       this.situacaoMembro = response;
       this.titleService.setTitle('Editando situação membro ' + response.situacao);
-    })
-      .catch(response => {
-        console.log(response);
-        this.adicionarMensagem('error', response.message, response.message);
-      });
+    });
   }
 
   prapararSalvar(form: NgForm) {
@@ -59,19 +55,15 @@ export class SituacaomembroCadastroComponent implements OnInit {
   }
 
   editar() {
-    this.situacaoMembroService.editar(this.situacaoMembro).then(response => {
+    this.situacaoMembroService.editar(this.situacaoMembro).subscribe(response => {
       this.adicionarMensagem('success', 'Editado com sucesso', 'Editado com sucesso');
       this.historicoService.salvar('Editou uma situação do membro ' + response.situacao, this.segurancaService.nomeUsuario);
       this.titleService.setTitle('Editando situação membro ' + response.situacao);
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 
   salvar(form: NgForm) {
-    this.situacaoMembroService.salvar(this.situacaoMembro).then(response => {
+    this.situacaoMembroService.salvar(this.situacaoMembro).subscribe(response => {
       this.adicionarMensagem('success', 'Cadastrado com sucesso', 'Cadastrado com sucesso');
       this.historicoService.salvar('Cadastrou uma situação do membro ' + response.situacao, this.segurancaService.nomeUsuario);
       form.reset();

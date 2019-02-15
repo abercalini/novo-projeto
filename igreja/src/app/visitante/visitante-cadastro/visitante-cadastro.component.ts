@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Visitante } from '../visitante';
 import { CargoministroService } from '../../cargoministro/cargoministro.service';
@@ -7,6 +8,7 @@ import { NgForm } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { HistoricoService } from '../../historico/historico.service';
 import { SegurancaService } from '../../seguranca/seguranca.service';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -24,31 +26,38 @@ export class VisitanteCadastroComponent implements OnInit {
     private visitanteService: VisitanteService,
     private messageService: MessageService,
     private historicoService: HistoricoService,
-    private segurancaService: SegurancaService
+    private segurancaService: SegurancaService,
+    private router: ActivatedRoute,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
-    this.listarVisitantes();
+    // this.listarVisitantes();
+    const codigo = this.router.snapshot.params['codigo'];
+  }
+
+  buscarPorCodigo(codigo: number) {
+    this.visitanteService.buscarPorCodigo(codigo).then(response => {
+
+    })
+    .catch(response => {
+      console.log(response);
+      this.adicionarMensagem('error', response.message, response.message);
+    });
   }
 
   salvar(form: NgForm) {
-    console.log('aqiio');
-    
-      this.visitanteService.salvar(this.visitante).then(response => {
+      this.visitanteService.salvar(this.visitante).subscribe(response => {
         form.reset();
         this.visitante = new Visitante();
         this.historicoService.salvar('Cadastrou um visitante ' + response.nome, this.segurancaService.nomeUsuario);
-        this.adicionarMensagem('success', 'Cadastrou com sucesso', 'Cadastrou com sucesso');  
-      })
-      .catch(response => {
-        console.log(response);
-        this.adicionarMensagem('error', response.message, response.message);
+        this.adicionarMensagem('success', 'Cadastrou com sucesso', 'Cadastrou com sucesso');
       });
   }
 
   buscarCep(cep: string) {
     cep = cep.replace('/', '');
-    this.visitanteService.buscarCep(cep).then(response => {
+    this.visitanteService.buscarCep(cep).subscribe(response => {
         this.visitante.endereco.bairro = response.logradouro;
         this.visitante.endereco.cep = response.cep;
         this.visitante.endereco.cidade = response.localidade;
@@ -56,8 +65,12 @@ export class VisitanteCadastroComponent implements OnInit {
     });
   }
 
-  listarVisitantes() {
-    this.cargoMinistroService.listarTodos().then(response => this.visitantes = response.map(v => ({label: v.nome, value: v.codigo})));
+ /* listarVisitantes() {
+    this.visitanteService.listarTodos().then(response => this.visitantes = response);
+  }*/
+
+  adicionarTitulo() {
+    this.titleService.setTitle('Editando visitante ' + this.visitante.nome);
   }
 
   adicionarMensagem(severity: string, detail: string, summary: string) {

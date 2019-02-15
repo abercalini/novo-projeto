@@ -29,7 +29,7 @@ export class MembroPesquisaComponent implements OnInit {
     private segurancaService: SegurancaService,
     private messageService: MessageService,
     private titleService: Title,
-    private router: Router 
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -42,11 +42,7 @@ export class MembroPesquisaComponent implements OnInit {
   }
 
   listarTodos() {
-    this.membroService.listarTodos().then(response => this.membros = response)
-      .catch(response => {
-        console.log(response);
-        this.messageService.add({severity: 'error', detail: response.message, summary: response.message});  
-      })
+    this.membroService.listarTodos().subscribe(response => this.membros = response);
   }
 
   showDialog(codigo: number) {
@@ -59,18 +55,14 @@ export class MembroPesquisaComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Deseja excluir o membro?',
       accept: () => {
-        this.membroService.excluir(this.codigo).then(() => {
+        this.membroService.excluir(this.codigo).subscribe(() => {
           this.tabela.first = 0;
           this.listarTodos();
           this.historicoService.salvar('Excluiu um membro', this.segurancaService.nomeUsuario);
           this.messageService.add({severity: 'success', detail: 'Excluido com sucesso', summary: 'Excluido com sucesso'});
-        })
-        .catch(response => {
-          console.log(response);
-          this.messageService.add({severity: 'success', detail: response.message, summary: response.message});
-        })
+        });
       }
-    })
+    });
   }
 
 

@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { SituacaoMembro } from './situacaomembro';
 
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,33 +15,33 @@ export class SituacaomembroService {
 
   constructor(private httpClient: HttpClient) { }
 
-  salvar(situacaoMembro: SituacaoMembro): Promise<any> {
-    return this.httpClient.post(this.baseUrl, JSON.stringify(situacaoMembro), {headers : this.cadastrarHeaders()})
-      .toPromise().then(response => response);
+  salvar(situacaoMembro: SituacaoMembro): Observable<SituacaoMembro> {
+    return this.httpClient.post<SituacaoMembro>(this.baseUrl, JSON.stringify(situacaoMembro), {headers : this.cadastrarHeaders()})
+      .map(response => response);
   }
 
-  editar(situacaoMembro: SituacaoMembro): Promise<any> {
-    return this.httpClient.put(`${this.baseUrl}/${situacaoMembro.codigo}`, JSON.stringify(situacaoMembro), {headers : this.cadastrarHeaders()})
-      .toPromise().then(response => response);
+  editar(situacaoMembro: SituacaoMembro): Observable<SituacaoMembro> {
+    return this.httpClient.put<SituacaoMembro>(`${this.baseUrl}/${situacaoMembro.codigo}`, JSON.stringify(situacaoMembro),
+      {headers : this.cadastrarHeaders()}).map(response => response);
   }
 
-  listarTodos(): Promise<any> {
-    return this.httpClient.get(this.baseUrl, {headers: this.cabecalho()}).toPromise().then(response => response);
+  listarTodos(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl, {headers: this.cabecalho()}).map(response => response);
   }
 
-  exluir(codigo: number): Promise<any> {
-    return this.httpClient.delete(`${this.baseUrl}/${codigo}`, {headers: this.cabecalho()}).toPromise().then(null);
+  exluir(codigo: number): Observable<SituacaoMembro> {
+    return this.httpClient.delete<SituacaoMembro>(`${this.baseUrl}/${codigo}`, {headers: this.cabecalho()});
   }
 
-  buscarPorCodigo(codigo: number): Promise<any> {
-    return this.httpClient.get(`${this.baseUrl}/${codigo}`, {headers: this.cabecalho()}).toPromise().then(response => response);
+  buscarPorCodigo(codigo: number): Observable<SituacaoMembro> {
+    return this.httpClient.get<SituacaoMembro>(`${this.baseUrl}/${codigo}`, {headers: this.cabecalho()}).map(response => response);
   }
 
 
   cadastrarHeaders() {
     let headers = new HttpHeaders();
     const token = localStorage.getItem('token');
- 
+
     headers = headers.set('Content-Type', 'application/json');
     headers = headers.set('Authorization', `Bearer ${token}`);
     return headers;
@@ -46,7 +50,7 @@ export class SituacaomembroService {
    cabecalho() {
     let headers = new HttpHeaders();
     const token = localStorage.getItem('token');
- 
+
     headers = headers.set('Authorization', `Bearer ${token}`);
     return headers;
    }

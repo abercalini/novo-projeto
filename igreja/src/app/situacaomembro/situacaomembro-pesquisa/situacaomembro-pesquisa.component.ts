@@ -25,30 +25,24 @@ export class SituacaomembroPesquisaComponent implements OnInit {
     private messageService: MessageService,
     private historicoService: HistoricoService,
     private seugancaService: SegurancaService
-  
+
   ) { }
 
   ngOnInit() {
     this.listarTodos();
-    this.title.setTitle('Pesquisa situação de membro')
+    this.title.setTitle('Pesquisa situação de membro');
   }
 
   listarTodos() {
-    this.situacaoMembroService.listarTodos().then(response => {
-      this.situacoes = response;
-    })
-    .catch(response => {
-      console.log(response);
-      this.messageService.add({severity: 'error', summary: response.message, detail: response.message});
-    })
+    this.situacaoMembroService.listarTodos().subscribe(response => this.situacoes = response);
   }
 
   excluir(codigo: number) {
-    //Todo: depois alterar o codigo quando o cadastro de membro estiver ativo
+    // Todo: depois alterar o codigo quando o cadastro de membro estiver ativo
     this.confirmationService.confirm({
       message: 'Deseja excluir a situação do membro?',
       accept: () => {
-        this.situacaoMembroService.exluir(codigo).then(() => {
+        this.situacaoMembroService.exluir(codigo).subscribe(() => {
           this.messageService.add({severity: 'success', summary: 'Excluido com sucesso', detail: 'Excluido com sucesso'});
           this.tabela.firs = 0;
           this.listarTodos();

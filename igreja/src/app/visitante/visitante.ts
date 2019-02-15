@@ -1,5 +1,6 @@
 export class Visitante {
     codigo: number;
+    nome: string;
     cargoMinistro = new CargoMinistro();
     telefone: string;
     email: string;

@@ -1,3 +1,4 @@
+import { CargoMinistro } from './../cargoMinistro';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { CargoministroService } from '../cargoministro.service';
@@ -34,11 +35,7 @@ export class CargoministroPesquisaComponent implements OnInit {
   }
 
   listarTodos() {
-    this.cargoMinistroService.listarTodos().then(response => this.cargos = response)
-      .catch(response => {
-        console.log(response);
-        this.adicionarMensagem('error', response.message, response.message);
-      });
+    this.cargoMinistroService.listarTodos().subscribe(response => this.cargos = response);
   }
 
   adicionarMensagem(severity: string, detail: string, sumary: string) {
@@ -49,16 +46,11 @@ export class CargoministroPesquisaComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Deseja excluir o cargo ministerial?',
       accept: () => {
-        this.cargoMinistroService.excluir(codigo).then(() => {
+        this.cargoMinistroService.excluir(codigo).subscribe(() => {
           this.historicoService.salvar('Excluiu um cargo ministerial', this.segurancaService.nomeUsuario);
           this.adicionarMensagem('success', 'Excluido com sucesso', 'Excluido com sucesso');
           this.tabela.fist = 0;
           this.listarTodos();
-        })
-        .catch(response => {
-          // TODO: depois de criar a tabela membro fazer as alterações
-          console.log(response);
-          this.adicionarMensagem('error', response.message, response.message);
         });
       }
     });

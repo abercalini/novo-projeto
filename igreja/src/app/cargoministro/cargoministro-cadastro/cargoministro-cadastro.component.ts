@@ -47,7 +47,7 @@ export class CargoministroCadastroComponent implements OnInit {
   }
 
   editar() {
-    this.cargoMinistroService.editar(this.cargoMinistro).then(response => {
+    this.cargoMinistroService.editar(this.cargoMinistro).subscribe(response => {
       this.adicionarMenssagem('success', 'Editado com sucesso', 'Editado com sucesso');
       this.adicionarTitulo();
       this.historicoService.salvar('Editou um cargo ' + response.nome, this.segurancaService.nomeUsuario);
@@ -55,27 +55,20 @@ export class CargoministroCadastroComponent implements OnInit {
   }
 
   salvar(ngForm: NgForm) {
-    this.cargoMinistroService.salvar(this.cargoMinistro).then(response => {
+    this.cargoMinistroService.salvar(this.cargoMinistro).subscribe(response => {
       this.adicionarMenssagem('success', 'Cadastrado com sucesso', 'Cadastrado com sucesso');
       this.historicoService.salvar('Cadastrou um cargo do ministro ' + response.nome, this.segurancaService.nomeUsuario);
       ngForm.reset();
       this.cargoMinistro = new CargoMinistro();
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMenssagem('error', response.message, response.message);
     });
   }
 
   buscarPorCodigo(codigo: number) {
-    this.cargoMinistroService.buscarPorCodigo(codigo).then(response => {
+    this.cargoMinistroService.buscarPorCodigo(codigo).subscribe(response => {
+      console.log(response);
       this.cargoMinistro = response;
       this.adicionarTitulo();
-    })
-      .catch(response => {
-        console.log(response);
-        this.adicionarMenssagem('error', response.message, response.message);
-      });
+    });
   }
 
   adicionarTitulo() {

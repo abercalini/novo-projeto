@@ -33,26 +33,18 @@ export class FuncaomembroPesquisaComponent implements OnInit {
   }
 
   listarTodos() {
-    this.funcaoMembroService.listaTodos().then(response => this.funcoes = response)
-      .catch(response => {
-        console.log(response);
-        this.adicionarMensagem('error', response.message, response.message);
-      });
+    this.funcaoMembroService.listaTodos().subscribe(response => this.funcoes = response);
   }
 
   excluir(codigo: number) {
     this.confirmationService.confirm({
       message: 'Deseja excluir a função?',
       accept: () => {
-        this.funcaoMembroService.excluir(codigo).then(() => {
+        this.funcaoMembroService.excluir(codigo).subscribe(() => {
           this.tabela.first = 0;
           this.listarTodos();
           this.adicionarMensagem('success', 'Excluido com sucesso', 'Excluido com sucesso');
           this.historicoService.salvar('Excluiu uma função do membro', this.segurancaService.nomeUsuario);
-        })
-        .catch(response => {
-          console.log(response);
-          this.adicionarMensagem('error', response.message, response.message);
         });
       }
     });

@@ -36,7 +36,7 @@ export class TipoadesaoCadastroComponent implements OnInit {
     } else {
       this.titleService.setTitle('Cadastro do tipo de adesão');
     }
-    
+
   }
 
   prepararSalvar(form: NgForm) {
@@ -48,39 +48,27 @@ export class TipoadesaoCadastroComponent implements OnInit {
   }
 
   editar() {
-    this.tipoAdesaoService.editar(this.tipoAdesao).then(response => {
+    this.tipoAdesaoService.editar(this.tipoAdesao).subscribe(response => {
       this.adicionarMensagem('success', 'Atualizado com sucesso', 'Atualizado com sucesso');
       this.adicionarTitulo();
       this.historicoService.salvar('Editou um tipo de adesão ' + response.nome, this.segurancaService.nomeUsuario);
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
-    })
+    });
   }
 
   buscarPorCodigo(codigo: number) {
-    this.tipoAdesaoService.buscarPorCodigo(codigo).then(response => {
+    this.tipoAdesaoService.buscarPorCodigo(codigo).subscribe(response => {
       this.tipoAdesao = response;
       this.adicionarTitulo();
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
-    })
+    });
   }
 
   salvar(form: NgForm) {
-    this.tipoAdesaoService.salvar(this.tipoAdesao).then(response => {
+    this.tipoAdesaoService.salvar(this.tipoAdesao).subscribe(response => {
       form.reset();
       this.tipoAdesao = new TipoAdesao();
       this.adicionarMensagem('success', 'Cadastrado com sucesso', 'Cadastrado com sucesso');
       this.historicoService.salvar('Tipo de adesão cadastrada ' + response.nome, this.segurancaService.nomeUsuario);
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
-    })
+    });
   }
 
   adicionarMensagem(severity: string, detail: string, summary: string) {

@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FuncaoMembro } from './funcaoMembro';
 
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,26 +16,26 @@ export class FuncaomembroService {
 
   constructor(private httpClient: HttpClient) { }
 
-  salvar(funcaoMembro: FuncaoMembro): Promise<any> {
-    return this.httpClient.post(this.baseUrl, JSON.stringify(funcaoMembro), {headers: this.adicionarHeadersSalvar()})
-      .toPromise().then(response => response);
+  salvar(funcaoMembro: FuncaoMembro): Observable<FuncaoMembro> {
+    return this.httpClient.post<FuncaoMembro>(this.baseUrl, JSON.stringify(funcaoMembro), {headers: this.adicionarHeadersSalvar()})
+      .map(response => response);
   }
 
-  editar(funcaoMembro: FuncaoMembro): Promise<any> {
-    return this.httpClient.put(`${this.baseUrl}/${funcaoMembro.codigo}`, JSON.stringify(funcaoMembro),
-      {headers: this.adicionarHeadersSalvar()}).toPromise().then(response => response);
+  editar(funcaoMembro: FuncaoMembro): Observable<FuncaoMembro> {
+    return this.httpClient.put<FuncaoMembro>(`${this.baseUrl}/${funcaoMembro.codigo}`, JSON.stringify(funcaoMembro),
+      {headers: this.adicionarHeadersSalvar()}).map(response => response);
   }
 
-  excluir(codigo: number): Promise<any> {
-    return this.httpClient.delete(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()}).toPromise().then(null);
+  excluir(codigo: number): Observable<FuncaoMembro> {
+    return this.httpClient.delete<FuncaoMembro>(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()});
   }
 
-  listaTodos(): Promise<any> {
-    return this.httpClient.get(this.baseUrl, {headers: this.adicionarHeaders()}).toPromise().then(response => response);
+  listaTodos(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl, {headers: this.adicionarHeaders()}).map(response => response);
   }
 
-  buscarPorCodigo(codigo: number): Promise<any> {
-    return this.httpClient.get(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()}).toPromise().then(response => response);
+  buscarPorCodigo(codigo: number): Observable<FuncaoMembro> {
+    return this.httpClient.get<FuncaoMembro>(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()}).map(response => response);
   }
 
 

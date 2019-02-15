@@ -1,6 +1,13 @@
+import { VisitanteFilter } from './visitanteFIlter';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Visitante } from './visitante';
+
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +18,31 @@ export class VisitanteService {
 
   constructor(private httpClient: HttpClient) { }
 
-
-  salvar(visitante: Visitante): Promise<any> {
-    return this.httpClient.post(this.baseUrl, JSON.stringify(visitante), {headers: this.adicionarHeadersSalvar()})
-      .toPromise().then(response => response);
+  salvar(visitante: Visitante): Observable<Visitante> {
+    return this.httpClient.post<Visitante>(this.baseUrl, JSON.stringify(visitante), {headers: this.adicionarHeadersSalvar()})
+      .map(response => response);
   }
 
-  listarTodos(): Promise<any> {
-    return this.httpClient.get(this.baseUrl, {headers: this.adicionarHeaders()}).toPromise().then(response => response);
+
+  excluir(codigo: number): Promise<any> {
+    return this.httpClient.delete(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()})
+      .toPromise().then(null);
   }
 
-  buscarCep(cep: string): Promise<any> {
-    return this.httpClient.get(`https://viacep.com.br/ws/${cep}/json/`).toPromise().then(response => response);
+  buscarPorCodigo(codigo: number): Promise<any> {
+    return this.httpClient.get(`${this.baseUrl}/${codigo}`).toPromise().then(response => response);
+  }
+
+  listarTodos(visitanteFilter: VisitanteFilter): Promise<any> {
+    let params = new HttpParams();
+    if (visitanteFilter.nome) {
+      params = params.set('nome', visitanteFilter.nome);
+    }
+    return this.httpClient.get(this.baseUrl, {params, headers: this.adicionarHeaders()}).toPromise().then(response => response);
+  }
+
+  buscarCep(cep: string): Observable<any> {
+    return this.httpClient.get<any>(`https://viacep.com.br/ws/${cep}/json/`).map(response => response);
   }
 
 

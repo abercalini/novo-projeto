@@ -10,14 +10,17 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 
 import { VisitanteCadastroComponent } from './visitante-cadastro/visitante-cadastro.component';
+import { VisitantePesquisaComponent } from './visitante-pesquisa/visitante-pesquisa.component';
 
 
 @NgModule({
-  declarations: [VisitanteCadastroComponent],
+  declarations: [VisitanteCadastroComponent, VisitantePesquisaComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -29,7 +32,9 @@ import { VisitanteCadastroComponent } from './visitante-cadastro/visitante-cadas
     ButtonModule,
     ToastModule,
     InputTextareaModule,
-    TableModule
+    TableModule,
+    TooltipModule,
+    ConfirmDialogModule
   ]
 })
 export class VisitanteModule { }

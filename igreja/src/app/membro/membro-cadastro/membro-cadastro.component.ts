@@ -61,7 +61,7 @@ export class MembroCadastroComponent implements OnInit {
     } else {
       this.titleService.setTitle('Cadastro de membro');
     }
-    
+
   }
 
   prepararSalvar(form: NgForm) {
@@ -74,74 +74,59 @@ export class MembroCadastroComponent implements OnInit {
 
 
   salvar(form: NgForm) {
-    this.membroService.salvar(this.membro).then(response => {
+    this.membroService.salvar(this.membro).subscribe(response => {
       form.reset();
       this.membro = new Membro();
       this.historicoService.salvar('Cadastrou um membro ' + response.nome, this.segurancaService.nomeUsuario);
       this.adicionarMensagem('success', 'Cadastro com sucesso', 'Cadastro com sucesso');
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 
   editar() {
-    this.membroService.editar(this.membro).then(response => {
+    this.membroService.editar(this.membro).subscribe(response => {
       this.historicoService.salvar('Editou um membro ' + response.nome, this.segurancaService.nomeUsuario);
       this.adicionarMensagem('success', 'Editado com sucesso', 'Editado com sucesso');
       this.adicionarTitulo();
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);  
     });
   }
 
 
   buscarPorCodigo(codigo: number) {
-    this.membroService.buscarPorCodigo(codigo).then(response => {
+    this.membroService.buscarPorCodigo(codigo).subscribe(response => {
       this.membro = response;
       this.adicionarTitulo();
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 
 
   adicionarFuncoes() {
-    this.funcaoMembroService.listaTodos().then(response => this.funcoes = response.map(f => ({label: f.nome, value: {codigo: f.codigo, nome: f.nome}})));
+    this.funcaoMembroService.listaTodos().subscribe(response => this.funcoes = response.map
+        (f => ({label: f.nome, value: {codigo: f.codigo, nome: f.nome}})));
   }
 
   adicionarAdesao() {
-    this.tipoAdesaoService.listarTodos().then(response => this.tipoAdesao = response.map(t => ({value: t.codigo, label: t.nome})));
+    this.tipoAdesaoService.listarTodos().subscribe(response => this.tipoAdesao = response.map(t => ({value: t.codigo, label: t.nome})));
   }
-  
+
   adicionarCargos() {
-    this.cargoMinistroService.listarTodos().then(response => {
+    this.cargoMinistroService.listarTodos().subscribe(response => {
       this.cargos = response.map(c => ({value: c.codigo, label: c.nome}));
     });
   }
 
   adiconarSituacao() {
-    this.situacaoMembroService.listarTodos().then(response => {
+    this.situacaoMembroService.listarTodos().subscribe(response => {
       this.situacao = response.map(s => ({value: s.codigo, label: s.situacao}));
-    })
+    });
   }
 
   buscarCep(cep: string) {
-    cep = cep.replace('/','');
-    this.membroService.buscarCep(cep).then(response => {
+    cep = cep.replace('/', '');
+    this.membroService.buscarCep(cep).subscribe(response => {
       this.membro.endereco.cidade = response.localidade;
       this.membro.endereco.bairro = response.logradouro;
       this.membro.endereco.cep = response.cep;
       this.membro.endereco.estado = response.uf;
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 
@@ -149,7 +134,7 @@ export class MembroCadastroComponent implements OnInit {
     this.batismo = [
       {value: 'Sim', label: 'Sim'},
       {value: 'Não', label: 'Não'}
-    ]
+    ];
   }
 
   adicionarTipos() {
@@ -179,7 +164,7 @@ export class MembroCadastroComponent implements OnInit {
     this.dizimista = [
       {value: 'Sim', label: 'Sim'},
       {value: 'Não', label: 'Não'}
-    ]
+    ];
   }
 
   adicionarMensagem(severity: string, detail: string, summary: string) {

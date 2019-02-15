@@ -2,6 +2,10 @@ import { CargoMinistro } from './cargoMinistro';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,26 +15,31 @@ export class CargoministroService {
 
   constructor(private httpClient: HttpClient) { }
 
-  salvar(cargoMinistro: CargoMinistro): Promise<any> {
-    return this.httpClient.post(`${this.baseUrl}`, JSON.stringify(cargoMinistro), {headers : this.adicionarHeadersSalvar()})
-      .toPromise().then(response => response);
+  salvar(cargoMinistro: CargoMinistro): Observable<CargoMinistro> {
+    return this.httpClient.post<CargoMinistro>(this.baseUrl, JSON.stringify(cargoMinistro), {headers: this.adicionarHeadersSalvar()})
+      .map(response => response);
   }
 
-  editar(cargoministro: CargoMinistro): Promise<any> {
-    return this.httpClient.put(`${this.baseUrl}/${cargoministro.codigo}`, JSON.stringify(cargoministro), {headers : this.adicionarHeadersSalvar()})
-      .toPromise().then(response => response);
+  editar(cargoministro: CargoMinistro): Observable<CargoMinistro> {
+    return this.httpClient.put<CargoMinistro>(`${this.baseUrl}/${cargoministro.codigo}`, JSON.stringify(cargoministro),
+      {headers : this.adicionarHeadersSalvar()}).map(response => response);
   }
 
-  excluir(codigo: number): Promise<any> {
-    return this.httpClient.delete(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()}).toPromise().then(null);
+  excluir(codigo: number): Observable<CargoMinistro> {
+    return this.httpClient.delete<CargoMinistro>(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()});
   }
 
-  buscarPorCodigo(codigo: number): Promise<any> {
-    return this.httpClient.get(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()}).toPromise().then(response => response);
+  buscarPorCodigo(codigo: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()}).map(response => response);
   }
 
-  listarTodos(): Promise<any> {
+  /*listarTodos(): Promise<any> {
     return this.httpClient.get(this.baseUrl, {headers: this.adicionarHeaders()}).toPromise().then(response => response);
+  } */
+
+  listarTodos(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl, {headers: this.adicionarHeaders()})
+      .map(response => response);
   }
 
   adicionarHeaders() {

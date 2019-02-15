@@ -3,6 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Membro } from './membro';
 
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
 
 
 @Injectable({
@@ -14,31 +18,31 @@ export class MembroService {
 
   constructor(private httpClient: HttpClient) { }
 
-  buscarCep(cep: string): Promise<any> {
-    return this.httpClient.get(`https://viacep.com.br/ws/${cep}/json/`).toPromise().then(response => response);
+  buscarCep(cep: string): Observable<any> {
+    return this.httpClient.get<any>(`https://viacep.com.br/ws/${cep}/json/`).map(response => response);
   }
 
-  salvar(membro: Membro): Promise<any> {
-    return this.httpClient.post(this.baseUrl, JSON.stringify(membro), {headers : this.adicionarHeadersSalvar()})
-      .toPromise().then(response => response);
+  salvar(membro: Membro): Observable<Membro> {
+    return this.httpClient.post<Membro>(this.baseUrl, JSON.stringify(membro), {headers : this.adicionarHeadersSalvar()})
+      .map(response => response);
   }
 
-  editar(membro: Membro): Promise<any> {
-    return this.httpClient.put(`${this.baseUrl}/${membro.codigo}`, JSON.stringify(membro), {headers : this.adicionarHeadersSalvar()})
-      .toPromise().then(response => response);
+  editar(membro: Membro): Observable<Membro> {
+    return this.httpClient.put<Membro>(`${this.baseUrl}/${membro.codigo}`
+    , JSON.stringify(membro), {headers : this.adicionarHeadersSalvar()}).map(response => response);
   }
 
-  excluir(codigo: number): Promise<any> {
-    return this.httpClient.delete(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()}).toPromise().then(null);
+  excluir(codigo: number): Observable<any> {
+    return this.httpClient.delete<Membro>(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()});
   }
 
-  listarTodos(): Promise<any> {
-    return this.httpClient.get(this.baseUrl, {headers: this.adicionarHeaders()}).toPromise().then(response => response);
+  listarTodos(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl, {headers: this.adicionarHeaders()}).map(response => response);
   }
 
-  buscarPorCodigo(codigo: number): Promise<any> {
-    return this.httpClient.get(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()})
-      .toPromise().then(response => {
+  buscarPorCodigo(codigo: number): Observable<Membro> {
+    return this.httpClient.get<Membro>(`${this.baseUrl}/${codigo}`, {headers: this.adicionarHeaders()})
+      .map(response => {
           const membro = response as Membro;
           this.converterStringToDate([membro]);
           return membro;

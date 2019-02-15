@@ -45,37 +45,26 @@ export class FuncaomembroCadastroComponent implements OnInit {
   }
 
   editar() {
-    this.funcaoMembroService.editar(this.funcaoMembro).then(response => {
+    this.funcaoMembroService.editar(this.funcaoMembro).subscribe(response => {
       this.adicionarMensagem('success', 'Alterado com sucesso', 'Alterado com sucesso');
       this.historicoService.salvar('Alterou uma função membro ' + response.nome, this.segurancaService.nomeUsuario);
       this.titleService.setTitle('Editando função ' + response.nome);
-    })
-    .catch(response => {
-      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 
   salvar(form: NgForm) {
-    this.funcaoMembroService.salvar(this.funcaoMembro).then(response => {
+    this.funcaoMembroService.salvar(this.funcaoMembro).subscribe(response => {
       form.reset();
       this.funcaoMembro = new FuncaoMembro();
       this.adicionarMensagem('success', 'Cadastrado com sucesso', 'Cadastrado com sucesso');
       this.historicoService.salvar('Cadastrou uma função do membro ' + response.nome, this.segurancaService.nomeUsuario);
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 
   buscarPorCodigo(codigo: number) {
-    this.funcaoMembroService.buscarPorCodigo(codigo).then(response => {
+    this.funcaoMembroService.buscarPorCodigo(codigo).subscribe(response => {
       this.funcaoMembro = response;
       this.titleService.setTitle('Editando função ' + response.nome);
-    })
-    .catch(response => {
-      console.log(response);
-      this.adicionarMensagem('error', response.message, response.message);
     });
   }
 

@@ -33,30 +33,21 @@ export class TipoadesaoPesquisaComponent implements OnInit {
   }
 
   listarTodos() {
-    this.tipoAdesaoService.listarTodos().then(response => this.adesoes = response)
-      .catch(response => {
-        console.log(response);
-        this.adicionarMensagem('error', response.message, response.message);
-      });
+    this.tipoAdesaoService.listarTodos().subscribe(response => this.adesoes = response);
   }
 
   excluir(codigo: number) {
     this.confirmationService.confirm({
       message: 'Deseja exluir o tipo de adesão?',
       accept: () => {
-        this.tipoAdesaoService.excluir(codigo).then(() => {
+        this.tipoAdesaoService.excluir(codigo).subscribe(() => {
           this.tabela.first = 0;
           this.listarTodos();
           this.historicoService.salvar('Excluiu um tipo de adesão', this.segurancaService.nomeUsuario);
           this.adicionarMensagem('success', 'Excluido com sucesso', 'Excluido com sucesso');
-        })
-        .catch(response => {
-          //TODO: IMPLEMEMTAR O CATCH DEPOIS QUE O CADASTRO DE MEMBRO
-          console.log(response);
-          this.adicionarMensagem('error', response.message, response.message);
-        })
+        });
       }
-    })
+    });
   }
 
 

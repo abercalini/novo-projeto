@@ -1,3 +1,4 @@
+import { VisitantePesquisaComponent } from './../visitante/visitante-pesquisa/visitante-pesquisa.component';
 import { MembroPesquisaComponent } from './../membro/membro-pesquisa/membro-pesquisa.component';
 import { MembroCadastroComponent } from './../membro/membro-cadastro/membro-cadastro.component';
 import { CargoministroCadastroComponent } from './../cargoministro/cargoministro-cadastro/cargoministro-cadastro.component';
@@ -59,6 +60,8 @@ const router: Routes = [
   {path : 'membro/:codigo', component: MembroCadastroComponent},
 
   {path: 'visitante/novo', component: VisitanteCadastroComponent},
+  {path: 'visitante', component: VisitantePesquisaComponent},
+  {path: 'visitante/:codigo', component: VisitanteCadastroComponent},
 
   {path: 'historico', component: HistoricoPesquisaComponent},
 
