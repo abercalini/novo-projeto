@@ -23,6 +23,7 @@ import { TipoadesaoPesquisaComponent } from '../tipoadesao/tipoadesao-pesquisa/t
 import { FuncaomembroCadastroComponent } from '../funcaomembro/funcaomembro-cadastro/funcaomembro-cadastro.component';
 import { FuncaomembroPesquisaComponent } from '../funcaomembro/funcaomembro-pesquisa/funcaomembro-pesquisa.component';
 import { VisitanteCadastroComponent } from '../visitante/visitante-cadastro/visitante-cadastro.component';
+import { NaoAutorizadoComponent } from '../nao-autorizado/nao-autorizado/nao-autorizado.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
@@ -65,6 +66,7 @@ const router: Routes = [
 
   {path: 'historico', component: HistoricoPesquisaComponent},
 
+  {path: 'naoautorizado', component: NaoAutorizadoComponent},
   {path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent},
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: '**', redirectTo: 'pagina-nao-encontrada', pathMatch: 'full'}

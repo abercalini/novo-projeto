@@ -37,7 +37,7 @@ export class SegurancaService {
 
        // console.log('Response com token payload');
       //  console.log(this.tokenPayload);
-        
+
       });
   }
 
@@ -55,17 +55,21 @@ export class SegurancaService {
       });
   }
 
+  temPermissao(permissao: string) {
+    return this.tokenDecodificado && !this.tokenDecodificado.authorities.includes(permissao);
+  }
+
   armazenarToken(token: string) {
     localStorage.setItem('token', token);
     this.tokenDecodificado = this.helper.decodeToken(token);
     this.nomeUsuario = this.tokenDecodificado.user_name;
 
-    //console.log('Token decoficado');
+    // console.log('Token decoficado');
     // console.log(this.tokenDecodificado);
 
   //  console.log('Nome do usuario');
     // console.log(this.nomeUsuario);
-    
+
   }
 
   carregarToken() {

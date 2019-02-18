@@ -4,6 +4,9 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 
+import { MessageService } from 'primeng/api';
+
+
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/finally';
@@ -17,13 +20,14 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
   isRefreshingToken = false;
   tokenSubject = new BehaviorSubject<string>(null);
 
-  constructor(public auth: SegurancaService, private router: Router) {}
+  constructor(public auth: SegurancaService, private router: Router, private messageService: MessageService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    
+
     return  next.handle(request)
       .catch(error => {
           if (error instanceof HttpErrorResponse) {
+
               switch ((<HttpErrorResponse>error).status) {
                   case 400:
                       return this.handle400Error(error);
@@ -32,12 +36,12 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
               }
           }
           return Observable.throw(error);
-        }); 
+        });
   }
 
   handle401Error(request: HttpRequest<any>, next: HttpHandler) {
       console.log('401');
-      
+
     if (!this.isRefreshingToken) {
         this.isRefreshingToken = true;
 
@@ -56,7 +60,8 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
                 return this.logoutUser('Falha ao obter refresh token');
             })
             .catch(error => {
-                // If there is an exception calling 'refreshToken', bad news so logout.
+              this.messageService.add({severity: 'error', detail: 'Por favor recarrege a página', summary: 'Por favor recarrege a página'});
+              // If there is an exception calling 'refreshToken', bad news so logout.
                 return this.logoutUser(error);
             })
             .finally(() => {
@@ -91,5 +96,5 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
   logoutUser(error) {
     this.auth.logout();
     return throwError(error);
-  } 
+  }
 }

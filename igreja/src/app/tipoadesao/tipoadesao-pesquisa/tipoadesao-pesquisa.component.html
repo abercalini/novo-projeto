@@ -34,9 +34,10 @@
                           <td>{{a.nome}}</td>
                           <td>
                               <button pButton type="button" icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"
-                                style="background-color: teal; border: none;" [routerLink]="['/tipoadesao/', a.codigo]"></button>
+                                style="background-color: teal; border: none;" [routerLink]="['/tipoadesao/', a.codigo]"
+                                [disabled]="segurancaService.temPermissao('ROLE_EDITAR_OBJETO')" ></button>
                               <button pButton type="button" icon="pi pi-times" pTooltip="Excluir" tooltipPosition="top"
-                                style="background-color: red; border: none;" (click)="excluir(a.codigo)"></button>
+                                style="background-color: red; border: none;" (click)="excluir(a.codigo)" [disabled]="segurancaService.temPermissao('ROLE_EXCLUIR_OBJETO')"></button>
                           </td>
                       </tr>
                   </ng-template>

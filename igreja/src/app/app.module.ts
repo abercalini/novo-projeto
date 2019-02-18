@@ -14,6 +14,7 @@ import { NavegacaoModule } from './navegacao/navegacao.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TipoadesaoModule } from './tipoadesao/tipoadesao.module';
 import { SituacaomembroModule } from './situacaomembro/situacaomembro.module';
+import { NaoAutorizadoModule } from './nao-autorizado/nao-autorizado.module';
 
 import { AppComponent } from './app.component';
 
@@ -27,7 +28,6 @@ import { IgrejaService } from './igreja/igreja.service';
 import { CargoministroService } from './cargoministro/cargoministro.service';
 import { TipoadesaoService } from './tipoadesao/tipoadesao.service';
 import { SituacaomembroService } from './situacaomembro/situacaomembro.service';
-
 
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
@@ -58,17 +58,18 @@ registerLocaleData(localePt);
     TipoadesaoModule,
     FuncaomembroModule,
     MembroModule,
-    VisitanteModule
+    VisitanteModule,
+    NaoAutorizadoModule
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'pt-BR',},
-    
+    {provide: LOCALE_ID, useValue: 'pt-BR'},
+
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RefreshTokenInterceptor,
       multi: true
     },
-    
+
     SegurancaService, JwtHelperService, MessageService, HistoricoService, FornecedorService, ConfirmationService,
     Title, DistritoService, IgrejaService, CargoministroService, SituacaomembroService, TipoadesaoService, FuncaomembroService,
     MembroService, VisitanteService

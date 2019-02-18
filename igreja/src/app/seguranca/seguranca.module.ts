@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     ToastModule,
     BrowserAnimationsModule,
-    CoreModule
+    CoreModule,
   ]
 })
 export class SegurancaModule { }
