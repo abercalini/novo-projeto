@@ -21,7 +21,8 @@ export class DistritoService {
   }
 
   editar(distrito: Distrito): Observable<Distrito> {
-    return this.httpClient.put<Distrito>(`${this.baseUrl}/${distrito.codigo}`, JSON.stringify(distrito), {headers: this.adicionarHeadersSalvar()})
+    return this.httpClient.put<Distrito>(`${this.baseUrl}/${distrito.codigo}`,
+      JSON.stringify(distrito), {headers: this.adicionarHeadersSalvar()})
       .map(response => response);
   }
 
